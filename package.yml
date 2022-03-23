@@ -1,0 +1,18 @@
+package: media_plus
+version: '1.0.0-dev'
+author: 'Alexander Walther'
+supportpage: https://www.alexplus.de
+
+requires:
+    redaxo: ^5.10
+    media_pool: ^2.10
+    media_manager: ^2.10
+
+page:
+    hidden: true
+
+pages: 
+    media_manager/media_plus:
+        title: Media Plus
+        perm: admin
+        pjax: true
