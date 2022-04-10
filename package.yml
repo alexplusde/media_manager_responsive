@@ -1,5 +1,5 @@
 package: media_manager_responsive
-version: '0.3-dev'
+version: '0.4-dev'
 author: 'Alexander Walther'
 supportpage: https://www.alexplus.de
 
@@ -14,5 +14,8 @@ page:
 
 pages: 
     media_manager/media_manager_responsive:
-        title: translate:media_plus_page
+        title: translate:media_manager_responsive_page
         perm: admin
+    media_manager/overview/responsive:
+        title: translate:media_manager_responsive_page
+        subPath: README.md
