@@ -1,12 +1,14 @@
 media_plus_page = Profile
 
 
-rex_media_manger_type_meta_table = Media Plus Meta-Infos
-rex_media_manger_type_group_table = Media Plus Gruppen
+rex_media_manager_type_meta_table = Media Plus Medientypen Metainfos
+rex_media_manager_type_group_table = Media Plus Gruppen
 
-media_manager_type_group_name = Name
+media_manager_type_group_name = Medientyp-Gruppe
+media_manager_type_group_description = Verwendung / Beschreibung
 media_manager_type_group_fallback = Fallback
-media_manager_type_group_meta = Profile
+media_manager_type_group_meta = Verknüpfte Medientypen
+media_manager_type_fallback_select = Fallback-Profil wählen
 
 media_manager_type_group_notice = Name der Gruppe (empfohlen: <code>[a-z]</code>)
 media_manager_type_group_fallback_notice =  Media Manager Typ, der als Fallback gewählt wird, bspw. als <code>&lt;img&gt;</code>-Tag in einem <code>&lt;picture&gt;</code>-Element 
