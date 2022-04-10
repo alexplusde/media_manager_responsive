@@ -60,7 +60,7 @@ Wird erläutert.
 
 ### Beispiel-Code `<picture>`-Element
 
-```
+```html
 <picture>
     <source media="(min-width: 1px)" sizes="" type="image/jpeg" data-width="480" data-height="321"
         srcset="/media/480w_1x/beispielbild.jpg?timestamp=1649629920">
@@ -92,6 +92,22 @@ Wird erläutert.
         srcset="/media/1920w_2x_webp/beispielbild.jpg?timestamp=1649629921"><img style="width: 100%; height: auto;"
         type="image/jpeg" src="/media/1920w_1x/beispielbild.jpg?timestamp=1649629921" width="1024" height="683" alt="">
 </picture>
+```
+
+### Beispiel-Code `<style>` für responsive Hintergrundbilder
+
+```html
+<!-- Media Plus Background-Styles for "beispiel.jpg" -->
+<style>
+    @media(min-width: 1px) { #title-bg-image{ background-image: url(/media/bs5.title.3x1_s/beispiel.jpg?timestamp=1649631662);} }
+    @media(min-width: 1px) { #title-bg-image{ background-image: url(/media/bs5.title.3x1_s_webp/beispiel.jpg?timestamp=1649631680);} }
+    @media(min-width: 480px) { #title-bg-image{ background-image: url(/media/bs5.title.3x1_m/beispiel.jpg?timestamp=1649631681);} }
+    @media(min-width: 480px) { #title-bg-image{ background-image: url(/media/bs5.title.3x1_m_webp/beispiel.jpg?timestamp=1649631682);} }
+    @media(min-width: 1024px) { #title-bg-image{ background-image: url(/media/bs5.title.3x1_l/beispiel.jpg?timestamp=1649631683);} }
+    @media(min-width: 1024px) { #title-bg-image{ background-image: url(/media/bs5.title.3x1_l_webp/beispiel.jpg?timestamp=1649631684);} }
+</style>    
+<div id="title-bg-image" style="background-size: cover; background-position: center">
+</div>
 ```
 
 ## FAQ
