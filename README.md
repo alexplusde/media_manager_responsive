@@ -48,6 +48,52 @@ Liefert ein vollständiges Image-Element anhand eines Präfix inkl. `srcset=""`-
 
 Wird erläutert.
 
+## Screenshots
+
+### Beispiel-Medientypen-Liste
+
+![image](https://user-images.githubusercontent.com/3855487/162642967-8dee2322-2702-4486-85fb-e988cbe8ef37.png)
+
+### Beispiel Responsive-Profil
+
+![image](https://user-images.githubusercontent.com/3855487/162643004-cc5614c2-e043-4a9b-a118-231853608b53.png)
+
+### Beispiel-Code `<picture>`-Element
+
+```
+<picture>
+    <source media="(min-width: 1px)" sizes="" type="image/jpeg" data-width="480" data-height="321"
+        srcset="/media/480w_1x/beispielbild.jpg?timestamp=1649629920">
+    <source media="(min-width: 1px)" sizes="" type="image/webp" data-width="1024" data-height="683"
+        srcset="/media/1920w_1x_webp/beispielbild.jpg?timestamp=1649629920">
+    <source media="(min-width: 1px)" sizes="" type="image/jpeg" data-width="960" data-height="641"
+        srcset="/media/480w_2x/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 1px)" sizes="" type="image/webp" data-width="960" data-height="641"
+        srcset="/media/480w_2x_webp/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 480px)" sizes="" type="image/jpeg" data-width="720" data-height="481"
+        srcset="/media/720w_1x/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 480px)" sizes="" type="image/webp" data-width="720" data-height="481"
+        srcset="/media/720w_1x_webp/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 480px)" sizes="" type="image/jpeg" data-width="1024" data-height="683"
+        srcset="/media/720w_2x/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 480px)" sizes="" type="image/webp" data-width="1024" data-height="683"
+        srcset="/media/720w_2x_webp/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 720px)" sizes="" type="image/jpeg" data-width="1024" data-height="683"
+        srcset="/media/1920w_1x/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 720px)" sizes="" type="image/webp" data-width="1024" data-height="683"
+        srcset="/media/1920w_1x_webp/beispielbild.jpg?timestamp=1649629920">
+    <source media="(min-width: 720px)" sizes="" type="image/jpeg" data-width="1024" data-height="683"
+        srcset="/media/1920w_2x/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 720px)" sizes="" type="image/jpeg" data-width="1024" data-height="683"
+        srcset="/media/1920w_2x_webp/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 1920px)" sizes="" type="image/jpeg" data-width="1024" data-height="683"
+        srcset="/media/1920w_2x/beispielbild.jpg?timestamp=1649629921">
+    <source media="(min-width: 1920px)" sizes="" type="image/jpeg" data-width="1024" data-height="683"
+        srcset="/media/1920w_2x_webp/beispielbild.jpg?timestamp=1649629921"><img style="width: 100%; height: auto;"
+        type="image/jpeg" src="/media/1920w_1x/beispielbild.jpg?timestamp=1649629921" width="1024" height="683" alt="">
+</picture>
+```
+
 ## FAQ
 
 ### Warum dauert der erste Seitenaufruf nach Verwendung sehr lange?
