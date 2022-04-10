@@ -81,21 +81,22 @@ class media_manager_type_group extends \rex_yform_manager_dataset
         return '<img srcset="'.$this->getSrcset($media_plus).'" src="'.rex_media_plus::getFrontendUrl($managed_media, $type->getType(), $file).'" width="'.$media_plus->getWidth().'" height="'.$media_plus->getHeight().'" />';
     }
     
-    public function getBackgroundStyles($file, $selector, $fragment_path = 'media_plus/background_styles.php')
+    public static function getBackgroundStyles($file, $groupname, $selector, $fragment_path = 'media_plus/background_styles.php')
     {
         $media_plus = rex_media_plus::get($file);
 
         if ('image/svg+xml' == $media_plus->getType()) {
             return $media_plus->getSvg();
         }
-
-        $types = $this->getTypes();
+        
+        $group = self::getByGroup($groupname);
+        $types = self::getTypes($groupname);
         $querys = [];
         foreach ($types as $type) {
             // Erstellen der Mediendatei
-            $cached_media = rex_media_manager::create($profile, $this->name)->getMedia();
+            $cached_media = rex_media_manager::create($type->getType(), $file)->getMedia();
             if ($cached_media instanceof rex_managed_media) {
-                $querys[] = '@media(min-width: '.$types->getMinWidth().') { '.$selector.'{ background-image: url('.rex_media_plus::getFrontendUrl($cached_media, $type->getType(), $file).');} }';
+                $querys[] = '@media(min-width: '.$type->getMinWidth().') { '.$selector.'{ background-image: url('.rex_media_plus::getFrontendUrl($cached_media, $type->getType(), $file).');} }';
             }
         }
         
