@@ -1,5 +1,8 @@
 # Media Manager Responsive für REDAXO 5
 
+![image](https://user-images.githubusercontent.com/3855487/162645318-e2c50a9f-6ea3-4a6c-8633-3603f9a2e4e5.png)
+
+
 REDAXO-Addon mit nützlichen Methoden im Umgang mit dem Picture-Element, responsiven Bilder, SVG-Ausgabe, u.v.m.
 
 Der erste Schritt: Einfach `rex_media::get()` durch `rex_media_plus::get()` in deinem Code ersetzen und los geht's.
