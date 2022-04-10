@@ -15,6 +15,7 @@ Der zweite Schritt: Eigene Responsive-Gruppen anlegen und Medientypen erstellen 
 * Direkte Ausgabe von SVGs ohne Image-Tag, z.B. für Logos und Icons 
 * Optimiert für Google PageSpeed: Vollständige Ausgabe der Meta-Informationen am Image- oder Picture-Element: Korrekte Höhe und Breite von Bildern werden als `width="XXX" height="XXX"` ausgegeben.
 * Optimiert für Google Structured Data - Meta-Informationen für die Google-Suchmaschine.
+* Cachebuster-URLs für Medien
 
 ## `rex_media_plus` verwenden
 
@@ -22,7 +23,7 @@ Die Klasse `rex_media_plus` ist eine Child-Klasse und erbt alle Methoden von `re
 
 ### `getFrontendUrl()`
 
-Liefert eine URL zum Frontend einschließlich Timestamp, z.B. `/media/image.ext?timestamp=XXXXXX`
+Liefert eine URL zum Frontend einschließlich Timestamp (Cachebuster), z.B. `/media/image.ext?timestamp=XXXXXX`
 
 ### `getSvg()`
 
