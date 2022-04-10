@@ -13,6 +13,6 @@ page:
 
 pages: 
     media_manager/media_plus:
-        title: Media Plus
+        title: translate:media_plus_page
         perm: admin
-        pjax: true
+        prio: 1

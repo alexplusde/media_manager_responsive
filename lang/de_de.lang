@@ -1,0 +1,21 @@
+media_plus_page = Profile
+
+
+rex_media_manger_type_meta_table = Media Plus Meta-Infos
+rex_media_manger_type_group_table = Media Plus Gruppen
+
+media_manager_type_group_name = Name
+media_manager_type_group_fallback = Fallback
+media_manager_type_group_meta = Profile
+
+media_manager_type_group_notice = Name der Gruppe (empfohlen: <code>[a-z]</code>)
+media_manager_type_group_fallback_notice =  Media Manager Typ, der als Fallback gewählt wird, bspw. als <code>&lt;img&gt;</code>-Tag in einem <code>&lt;picture&gt;</code>-Element 
+media_manager_type_meta_type  = Media Manager Typ
+media_manager_type_meta_ratio = Device Pixel Ratio
+media_manager_type_meta_min_width = min-width
+media_manager_type_meta_max_width = max-width
+media_manager_type_meta_min-width_notice = Breakpoint, bis zu welcher Viewport-Breite dieses Profil verwendet werden soll, z.B. <code>1024px</code> (empfohlen)
+media_manager_type_meta_max_width_notice = Breakpoint, ab welcher Viewport-Breite dieses Profil verwendet werden soll, z.B. <code>1023px</code>, um ab 1024px dargestellt zu werden. (empfohlen: nur min-width ausfüllen)
+
+media_manager_type_meta_group_id = Name der Gruppe
+media_manager_type_meta_prio =  Reihenfolge
