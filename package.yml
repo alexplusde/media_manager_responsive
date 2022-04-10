@@ -1,12 +1,13 @@
 package: media_plus
-version: '1.0.0-dev'
+version: '0.1-dev'
 author: 'Alexander Walther'
 supportpage: https://www.alexplus.de
 
 requires:
-    redaxo: ^5.10
-    media_pool: ^2.10
-    media_manager: ^2.10
+    redaxo: ^5.13
+    mediapool: ^2.11
+    media_manager: ^2.12
+    yform: ^4
 
 page:
     hidden: true
@@ -15,4 +16,3 @@ pages:
     media_manager/media_plus:
         title: translate:media_plus_page
         perm: admin
-        prio: 1
