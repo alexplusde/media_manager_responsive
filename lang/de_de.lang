@@ -1,8 +1,8 @@
-media_plus_page = Profile
+media_manager_responsive_page = Profile
 
 
-rex_media_manager_type_meta_table = Media Plus Medientypen Metainfos
-rex_media_manager_type_group_table = Media Plus Gruppen
+rex_media_manager_type_meta_table = Responsive-Profile
+rex_media_manager_type_group_table = Media Manager Gruppen
 
 media_manager_type_group_name = Medientyp-Gruppe
 media_manager_type_group_description = Verwendung / Beschreibung

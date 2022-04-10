@@ -1,4 +1,4 @@
-package: media_plus
+package: media_manager_responsive
 version: '0.1-dev'
 author: 'Alexander Walther'
 supportpage: https://www.alexplus.de
@@ -13,6 +13,6 @@ page:
     hidden: true
 
 pages: 
-    media_manager/media_plus:
+    media_manager/media_manager_responsive:
         title: translate:media_plus_page
         perm: admin

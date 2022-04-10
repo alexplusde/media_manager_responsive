@@ -32,7 +32,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
 
     public static function getPicture($groupname, $file)
     {
-        $media_plus = media_plus::get($file);
+        $media_plus = rex_media_plus::get($file);
         if ($media_plus) {
             if ('image/svg+xml' == $media_plus->getType()) {
                 return $media_plus->getSvg();
@@ -46,14 +46,14 @@ class media_manager_type_group extends \rex_yform_manager_dataset
                 // Erstellen der Mediendatei
                 $cached_media = self::getMediaCacheFile($type->getType(), $file);
                 if ($cached_media instanceof rex_managed_media) {
-                    $picture[] = '<source media="(min-width: '.$type->getMinWidth().')" sizes="" type="image/'.$cached_media->getFormat().'" data-width="'.$cached_media->getWidth().'" data-height="'.$cached_media->getHeight().'" srcset="'.media_plus::getFrontendUrl($cached_media, $type->getType(), $file).'">';
+                    $picture[] = '<source media="(min-width: '.$type->getMinWidth().')" sizes="" type="image/'.$cached_media->getFormat().'" data-width="'.$cached_media->getWidth().'" data-height="'.$cached_media->getHeight().'" srcset="'.rex_media_plus::getFrontendUrl($cached_media, $type->getType(), $file).'">';
                 }
             }
 
             $cached_media = self::getMediaCacheFile($group->getFallback(), $file);
 
             if ($cached_media instanceof rex_managed_media) {
-                $picture[] = '<img style="width: 100%; height: auto;" type="image/'.$cached_media->getFormat().'" src="'.media_plus::getFrontendUrl($cached_media, $group->getFallback(), $file).'" width="'.$cached_media->getWidth().'" height="'.$cached_media->getHeight().'" alt="'.$media_plus->getTitle().'" />';
+                $picture[] = '<img style="width: 100%; height: auto;" type="image/'.$cached_media->getFormat().'" src="'.rex_media_plus::getFrontendUrl($cached_media, $group->getFallback(), $file).'" width="'.$cached_media->getWidth().'" height="'.$cached_media->getHeight().'" alt="'.$media_plus->getTitle().'" />';
             }
     
             $picture[] = '</picture>';
@@ -68,7 +68,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
             $types = $this->getTypes();
 
             foreach ($types as $type) {
-                $srcset[] = media_plus::getFrontendUrl($media_plus, $type->getType(), $file).' '.$type->getMinWidth();
+                $srcset[] = rex_media_plus::getFrontendUrl($media_plus, $type->getType(), $file).' '.$type->getMinWidth();
             }
 
             return implode(',', $srcset);
@@ -78,12 +78,12 @@ class media_manager_type_group extends \rex_yform_manager_dataset
     public function getImg($file)
     {
         $media_plus = media_plus::get($file);
-        return '<img srcset="'.$this->getSrcset($media_plus).'" src="'.$media_plus::getFrontendUrl($managed_media, $type->getType(), $file).'" width="'.$media_plus->getWidth().'" height="'.$media_plus->getHeight().'" />';
+        return '<img srcset="'.$this->getSrcset($media_plus).'" src="'.rex_media_plus::getFrontendUrl($managed_media, $type->getType(), $file).'" width="'.$media_plus->getWidth().'" height="'.$media_plus->getHeight().'" />';
     }
     
     public function getBackgroundStyles($file, $selector, $fragment_path = 'media_plus/background_styles.php')
     {
-        $media_plus = media_plus::get($file);
+        $media_plus = rex_media_plus::get($file);
 
         if ('image/svg+xml' == $media_plus->getType()) {
             return $media_plus->getSvg();
@@ -95,7 +95,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
             // Erstellen der Mediendatei
             $cached_media = rex_media_manager::create($profile, $this->name)->getMedia();
             if ($cached_media instanceof rex_managed_media) {
-                $querys[] = '@media(min-width: '.$types->getMinWidth().') { '.$selector.'{ background-image: url('.media_plus::getFrontendUrl($cached_media, $type->getType(), $file).');} }';
+                $querys[] = '@media(min-width: '.$types->getMinWidth().') { '.$selector.'{ background-image: url('.rex_media_plus::getFrontendUrl($cached_media, $type->getType(), $file).');} }';
             }
         }
         

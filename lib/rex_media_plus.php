@@ -1,17 +1,12 @@
 <?php
 
-class media_plus extends rex_media
+class rex_media_plus extends rex_media
 {
     private $loading = 'auto';
 
     public function __construct()
     {
         return $this;
-    }
-
-    public static function getMediaPath()
-    {
-        return 'media';
     }
 
     public function getLoading()
@@ -39,6 +34,11 @@ class media_plus extends rex_media
         return html_entity_decode($fragment->parse('media_plus/structured_data.php'));
     }
 
+    public function getBackgroundStyles($group_name)
+    {
+        return media_manager_type_group::getByGroup($group_name)->getBackgroundStyles();
+    }
+
     public function getImg($profile)
     {
         return '<img src="'.self::getFrontendUrl($this, $profile).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
@@ -60,7 +60,7 @@ class media_plus extends rex_media
     {
         $filename = $media;
 
-        if ($media instanceof rex_media or $media instanceof media_plus) {
+        if ($media instanceof rex_media or $media instanceof rex_media_plus) {
             $filename = $media->getFileName();
         } elseif ($media instanceof rex_managed_media) {
             $filename = $media->getMediaFilename();
@@ -70,7 +70,7 @@ class media_plus extends rex_media
         if ($show_timestamp) {
             if ($media instanceof rex_managed_media) {
                 $timestamp = '?timestamp='.filectime($media->getSourcePath());
-            } elseif ($media instanceof rex_media or $media instanceof media_plus) {
+            } elseif ($media instanceof rex_media or $media instanceof rex_media_plus) {
                 $timestamp = '?timestamp='.filectime(rex_path::media($filename));
             }
         }
