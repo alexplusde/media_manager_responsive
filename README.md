@@ -19,6 +19,7 @@ Der zweite Schritt: Eigene Responsive-Gruppen anlegen und Medientypen erstellen 
 * Optimiert für Google PageSpeed: Vollständige Ausgabe der Meta-Informationen am Image- oder Picture-Element: Korrekte Höhe und Breite von Bildern werden als `width="XXX" height="XXX"` ausgegeben.
 * Optimiert für Google Structured Data - Meta-Informationen für die Google-Suchmaschine.
 * Cachebuster-URLs für Medien
+* Kompatibel zu `FriendsOfRedaxo\minify_images` und `FriendsOfRedaxo\focuspoint`
 
 ## `rex_media_plus` verwenden
 
