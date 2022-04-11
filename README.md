@@ -117,6 +117,19 @@ Wird erläutert.
 
 ## FAQ
 
+### Wie verbessert dieses Addon meinen PageSpeed?
+
+Richtig eingesetzt durch die Kombination von 2 Features: 
+
+1. Durch die parallele Nutzung verschiedener Dateiformate (z.B. WEBP+JPG) und durch Media-Querys, bspw. beim `<picture>`-Element oder mehreren `<img srcset>`-Profilen. Dadurch wählt der Browser des jeweiligen Geräts die passende Auflösung und Bilddateien können bereits im Media Manager verkleinert werden. Statt Bilder mit hunderten an Kilobytes müssen in den jeweiligen Szenarien nur wenige Kilobyte pro Bild übertragen werden.
+2. Durch Zeitstempel an den jeweiligen Bild-URLs, z.B. `/mediaprofil/beispiel.jpg?timestamp=1234567890`. Richtig eingesetzt kann in der `.htaccess` oder an anderer Stelle des Servers das Bild ewig gecached werden - im REDAXO-Kontext auch als "Cache-Buster" bekannt. Nur wenn das Bild sich tatsächlich ändert, ändert sich die URL.
+
+Google PageSpeed-Scores von deutlich über 90 Punkten sowohl Mobil, als auch am Desktop, sind damit problemlos möglich.
+
+### Was ist der Unterschied zum Addon `media_manager_plus`?
+
+Media Manager Responsive kommt mit zahlreichen Erweiterungen, die es so in `media_manager_plus` nicht gibt. Darüber hinaus verzichtet Media Manager Responsive auf externe Bibliotheken wie `lazysizes`, sondern setzt voll und ganz auf moderne Browser-Features und bleibt bei korrekter Konfiguration (bspw. Fallback-Formaten) dennoch kompatibel.
+
 ### Warum dauert der erste Seitenaufruf nach Verwendung sehr lange?
 
 Puh, statt dass jedes Bild nur ein Media-Manager-Profil durchläuft, sind es je nach gewählten Einstellungen beliebig viele Bilder. Beim Autor dieses Addons sind das schnell mal 18 Varianten pro Bild ((S, M, L) * (JPG, WEBP) * (1x, 2x, 3x) = 18 Kombinationen je Bild) Diese werden aus Optimierungsgründen auch alle in einem Rutsch erstellt.
