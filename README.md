@@ -14,11 +14,12 @@ Der zweite Schritt: Eigene Responsive-Gruppen anlegen und Medientypen erstellen 
 ## Features
 
 * Vereinfachte Ausgabe von Picture-Elementen und Bildern mit srcset-Attributen
-* Automatisches hinzufügen von Timestamps an die URL eines Mediums, um exzessives Caching aktivieren zu können
 * Direkte Ausgabe von SVGs ohne Image-Tag, z.B. für Logos und Icons 
-* Optimiert für Google PageSpeed: Vollständige Ausgabe der Meta-Informationen am Image- oder Picture-Element: Korrekte Höhe und Breite von Bildern werden als `width="XXX" height="XXX"` ausgegeben.
+* Google PageSpeed-, Ladezeit und Benutzererlebnis-Optimierungen 
+  * Automatisches hinzufügen von Timestamps an die URL eines Mediums, um exzessives Caching aktivieren zu können
+  * Vollständige Ausgabe der Meta-Informationen am Image- oder Picture-Element: Korrekte Höhe und Breite von Bildern werden als `width="XXX" height="XXX"` ausgegeben.
+  * Cachebuster-URLs für Medien 
 * Optimiert für Google Structured Data - Meta-Informationen für die Google-Suchmaschine.
-* Cachebuster-URLs für Medien
 * Kompatibel zu `FriendsOfRedaxo\minify_images` und `FriendsOfRedaxo\focuspoint`
 
 ## `rex_media_plus` verwenden
@@ -119,10 +120,11 @@ Wird erläutert.
 
 ### Wie verbessert dieses Addon meinen PageSpeed?
 
-Richtig eingesetzt durch die Kombination von 2 Features: 
+Richtig eingesetzt durch die Kombination von 3 Features, die sowohl von Google PageSpeed berücksichtigt werden, als auch das Nutzererlebenis für die Besucher verbessern: 
 
 1. Durch die parallele Nutzung verschiedener Dateiformate (z.B. WEBP+JPG) und durch Media-Querys, bspw. beim `<picture>`-Element oder mehreren `<img srcset>`-Profilen. Dadurch wählt der Browser des jeweiligen Geräts die passende Auflösung und Bilddateien können bereits im Media Manager verkleinert werden. Statt Bilder mit hunderten an Kilobytes müssen in den jeweiligen Szenarien nur wenige Kilobyte pro Bild übertragen werden.
 2. Durch Zeitstempel an den jeweiligen Bild-URLs, z.B. `/mediaprofil/beispiel.jpg?timestamp=1234567890`. Richtig eingesetzt kann in der `.htaccess` oder an anderer Stelle des Servers das Bild ewig gecached werden - im REDAXO-Kontext auch als "Cache-Buster" bekannt. Nur wenn das Bild sich tatsächlich ändert, ändert sich die URL.
+3. Durch das Auslesen der tatsächlichen Höhen- und Breitenangaben der Bilder - auch von gecachten Media Manager Bildern - ist der Browser in der Lage, Platz für die Abmaße der Bilder zu schaffen, bevor diese geladen sind, und somit Verschiebungen beim Laden und Rendern der Website elimiert werden. Keine nervigen "Layout-Sprünge" mehr.
 
 Google PageSpeed-Scores von deutlich über 90 Punkten sowohl Mobil, als auch am Desktop, sind damit problemlos möglich.
 
