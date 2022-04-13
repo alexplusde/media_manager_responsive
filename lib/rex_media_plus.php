@@ -31,7 +31,7 @@ class rex_media_plus extends rex_media
         $fragment->setVar('name', $this->getValue('name'));
         $fragment->setVar('datePublished', date('Y-m-d', $this->getUpdatedate()));
 
-        return html_entity_decode($fragment->parse('media_plus/structured_data.php'));
+        return html_entity_decode($fragment->parse('media_manager_responsive/structured_data.php'));
     }
 
     public function getBackgroundStyles($group_name)
@@ -56,6 +56,12 @@ class rex_media_plus extends rex_media
         PHP_EOL.rex_file::get(rex_path::media($this->name)).PHP.EOL.
         "<!-- / ".$this->name." -->";
     }
+
+    public function getPicture($groupname)
+    {
+        return media_manager_type_group::getPicture($groupname, $this->getFileName());
+    }
+
     public static function getFrontendUrl($media, $profile = null, $show_timestamp = true)
     {
         $filename = $media;

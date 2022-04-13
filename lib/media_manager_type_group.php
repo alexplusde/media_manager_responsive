@@ -81,10 +81,14 @@ class media_manager_type_group extends \rex_yform_manager_dataset
         return '<img srcset="'.$this->getSrcset($media_plus).'" src="'.rex_media_plus::getFrontendUrl($managed_media, $type->getType(), $file).'" width="'.$media_plus->getWidth().'" height="'.$media_plus->getHeight().'" />';
     }
     
-    public static function getBackgroundStyles($file, $groupname, $selector, $fragment_path = 'media_plus/background_styles.php')
+    public static function getBackgroundStyles($file, $groupname, $selector, $fragment_path = 'media_manager_responsive/background_styles.php')
     {
         $media_plus = rex_media_plus::get($file);
 
+        if (!$media_plus) {
+            return;
+        }
+        
         if ('image/svg+xml' == $media_plus->getType()) {
             return $media_plus->getSvg();
         }
