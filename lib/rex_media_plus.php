@@ -39,9 +39,12 @@ class rex_media_plus extends rex_media
         return media_manager_type_group::getByGroup($group_name)->getBackgroundStyles();
     }
 
-    public function getImg($profile)
+    public function getImg($profile = null)
     {
-        return '<img src="'.self::getFrontendUrl($this, $profile).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+        if ($profile) {
+            return '<img src="'.self::getFrontendUrl($this, $profile).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+        }
+        return '<img src="'.self::getFrontendUrl($this).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
     }
 
     public function getImgBase64()
@@ -86,5 +89,37 @@ class rex_media_plus extends rex_media
         }
 
         return rex_url::media($filename) . $timestamp;
+    }
+
+    public static function mediapool_updated_svg_viewbox(rex_extension_point $ep)
+    {
+        $subject = $ep->getSubject();
+        $filename = $ep->getParam('filename');
+
+        $media = rex_media::get($filename);
+
+        if ('image/svg+xml' == $media->getType()) {
+            $xml = simplexml_load_file(rex_path::media($filename));
+
+
+            $viewBox = $xml['viewBox'] ? $xml['viewBox']->__toString() : 0;
+            $viewBox = preg_split('/[\s,]+/', $viewBox);
+            $width = (float) ($viewBox[2] - $viewBox[0] ?? 0);
+            $height = (float) ($viewBox[3] - $viewBox[1] ?? 0);
+
+            if (!$height && !$width) {
+                $width = $xml['width'] ? $xml['width']->__toString() : 0;
+                $height = $xml['height'] ? $xml['height']->__toString() : 0;
+            }
+
+            $sql = rex_sql::factory();
+            $sql->setWhere('filename="'.$filename.'"');
+            $sql->setTable('rex_media');
+            $sql->setValue('width', $width);
+            $sql->setValue('height', $height);
+            $sql->update();
+        }
+
+        return $subject;
     }
 }

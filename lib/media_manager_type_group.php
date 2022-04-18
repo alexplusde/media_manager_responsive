@@ -77,7 +77,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
 
     public function getImg($file)
     {
-        $media_plus = media_plus::get($file);
+        $media_plus = rex_media_plus::get($file);
         return '<img srcset="'.$this->getSrcset($media_plus).'" src="'.rex_media_plus::getFrontendUrl($managed_media, $type->getType(), $file).'" width="'.$media_plus->getWidth().'" height="'.$media_plus->getHeight().'" />';
     }
     
