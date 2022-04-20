@@ -21,3 +21,6 @@ media_manager_type_meta_max_width_notice = Breakpoint, ab welcher Viewport-Breit
 
 media_manager_type_meta_group_id = Name der Gruppe
 media_manager_type_meta_prio =  Reihenfolge
+
+media_manager_responsive_info_donate = Anders als die meisten Addons aus der REDAXO-Community ist die Entstehung und Weiterentwicklung dieses Addons nicht durch eigene Projekte gedeckt. Mit einer Spende oder einer Beauftragung sicherst du zusätzliche Features, die Stabilität, Funktionsumfang und Weiterentwicklung weiter verbessern können, sowie eine bessere Anleitung. 
+media_manager_responsive_donate = Weiterentwicklung unterstützen 
