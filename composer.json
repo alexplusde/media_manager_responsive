@@ -1,0 +1,15 @@
+{
+    "name": "alexplus/media_manager_responsive",
+    "description": "",
+    "type": "redaxo-addon",
+    "require": {
+        "enshrined/svg-sanitize": "^0.15.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Walther",
+            "email": "mail@alexplus.de"
+        }
+    ]
+}
