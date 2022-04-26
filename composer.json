@@ -1,0 +1,14 @@
+{
+    "name": "alexplus/media_manager_responsive",
+    "type": "redaxo-addon",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Walther",
+            "email": "mail@alexplus.de"
+        }
+    ],
+    "require": {
+        "rhukster/dom-sanitizer": "^1.0"
+    }
+}
