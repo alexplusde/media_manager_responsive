@@ -46,7 +46,15 @@ class media_manager_type_group extends \rex_yform_manager_dataset
                 // Erstellen der Mediendatei
                 $cached_media = self::getMediaCacheFile($type->getType(), $file);
                 if ($cached_media instanceof rex_managed_media) {
-                    $picture[] = '<source media="(min-width: '.$type->getMinWidth().')" sizes="" type="image/'.$cached_media->getFormat().'" data-width="'.$cached_media->getWidth().'" data-height="'.$cached_media->getHeight().'" srcset="'.rex_media_plus::getFrontendUrl($cached_media, $type->getType(), $file).'">';
+                    $media['devices'] = "all";
+                    if ($type->getMinWidth() != "") {
+                    $media['min_width'] = '(min-width: '.$type->getMinWidth().')';
+                    }
+                    if ($type->getMaxWidth() != "") {
+                        $media['max_width'] = '(max-width: '.$type->getMaxWidth().')';
+                    }
+                    $media_attr = implode(" AND ", $media);
+                    $picture[] = '<source media="'.$media_attr.'" sizes="" type="image/'.$cached_media->getFormat().'" data-width="'.$cached_media->getWidth().'" data-height="'.$cached_media->getHeight().'" srcset="'.rex_media_plus::getFrontendUrl($cached_media, $type->getType(), $file).'">';
                 }
             }
 
