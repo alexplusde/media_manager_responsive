@@ -56,7 +56,7 @@ class rex_media_plus extends rex_media
     {
         return
         "<!-- ".$this->name." -->".
-        PHP_EOL.rex_file::get(rex_path::media($this->name)).PHP_EOL.
+        PHP_EOL.rex_file::get(rex_path::media($this->name)).PHP.EOL.
         "<!-- / ".$this->name." -->";
     }
 
@@ -67,13 +67,14 @@ class rex_media_plus extends rex_media
 
     public static function getFrontendUrl($media, $profile = null, $show_timestamp = true)
     {
-        $filename = $media;
-
         if ($media instanceof rex_media or $media instanceof rex_media_plus) {
             $filename = $media->getFileName();
         } elseif ($media instanceof rex_managed_media) {
-            $filename = $media->getMediaFilename();
+            # $filename = $media->getMediaFilename();
+            # Workaround wg. https://github.com/redaxo/redaxo/issues/4519#issuecomment-1183515367
+            $filename = array_pop(explode("/",$media->getMediaPath()));
         }
+
         $timestamp = '';
 
         if ($show_timestamp) {

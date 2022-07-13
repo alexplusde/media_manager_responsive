@@ -48,7 +48,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
                 if ($cached_media instanceof rex_managed_media) {
                     $media['devices'] = "all";
                     if ($type->getMinWidth() != "") {
-                    $media['min_width'] = '(min-width: '.$type->getMinWidth().')';
+                        $media['min_width'] = '(min-width: '.$type->getMinWidth().')';
                     }
                     if ($type->getMaxWidth() != "") {
                         $media['max_width'] = '(max-width: '.$type->getMaxWidth().')';
@@ -61,7 +61,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
             $cached_media = self::getMediaCacheFile($group->getFallback(), $file);
 
             if ($cached_media instanceof rex_managed_media) {
-                $picture[] = '<img style="width: 100%; height: auto;" type="image/'.$cached_media->getFormat().'" src="'.rex_media_plus::getFrontendUrl($cached_media, $group->getFallback(), $file).'" width="'.$cached_media->getWidth().'" height="'.$cached_media->getHeight().'" alt="'.$media_plus->getTitle().'" />';
+                $picture[] = '<img type="image/'.$cached_media->getFormat().'" src="'.rex_media_plus::getFrontendUrl($cached_media, $group->getFallback(), $file).'" width="'.$cached_media->getWidth().'" height="'.$cached_media->getHeight().'" alt="'.$media_plus->getTitle().'" />';
             }
     
             $picture[] = '</picture>';
