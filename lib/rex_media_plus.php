@@ -72,7 +72,8 @@ class rex_media_plus extends rex_media
         } elseif ($media instanceof rex_managed_media) {
             # $filename = $media->getMediaFilename();
             # Workaround wg. https://github.com/redaxo/redaxo/issues/4519#issuecomment-1183515367
-            $filename = array_pop(explode("/",$media->getMediaPath()));
+            $path = explode(DIRECTORY_SEPARATOR, $media->getMediaPath());
+            $filename = array_pop($path);
         }
 
         $timestamp = '';
