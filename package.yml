@@ -1,5 +1,5 @@
 package: media_manager_responsive
-version: '0.5.2-dev'
+version: '0.6-dev'
 author: 'Alexander Walther'
 supportpage: https://www.alexplus.de
 
@@ -16,6 +16,16 @@ pages:
     media_manager/media_manager_responsive:
         title: translate:media_manager_responsive_page
         perm: admin
+        subpages:
+            profile:
+                title: translate:media_manager_responsive_page_profile
+                perm: admin
+            settings:
+                title: translate:media_manager_responsive_page_settings
+                perm: admin
     media_manager/overview/responsive:
         title: translate:media_manager_responsive_page
         subPath: README.md
+
+default_config:
+    cache_warmup: "enhanced"

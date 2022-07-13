@@ -1,4 +1,4 @@
-media_manager_responsive_page = Responsive
+media_manager_responsive_page = Responsive-Profile
 
 
 rex_media_manager_type_meta_table = Responsive-Profile
@@ -22,5 +22,18 @@ media_manager_type_meta_max_width_notice = Breakpoint, ab welcher Viewport-Breit
 media_manager_type_meta_group_id = Name der Gruppe
 media_manager_type_meta_prio =  Reihenfolge
 
-media_manager_responsive_info_donate = Anders als die meisten Addons aus der REDAXO-Community ist die Entstehung und Weiterentwicklung dieses Addons nicht durch eigene Projekte gedeckt. Mit einer Spende oder einer Beauftragung sicherst du zusätzliche Features, die Stabilität, Funktionsumfang und Weiterentwicklung weiter verbessern können, sowie eine bessere Anleitung. 
-media_manager_responsive_donate = Weiterentwicklung unterstützen 
+media_manager_responsive_page_settings = Einstellungen
+media_manager_responsive_page_profile = Profile
+
+media_manager_responsive_settings = Einstellungen
+media_manager_responsive_cache_warmup_label = Cache Warmup
+media_manager_responsive_cache_warmup_original = Keine Änderung
+media_manager_responsive_cache_warmup_enhanced = Optimiert (empfohlen)
+media_manager_responsive_cache_warmup_notice = Empfohlen: Erzwingt, dass Cache-Warmup den Cache "langsam" aufwärmt, um genügend Zeit zur Bildgenerierung zu lassen. Deaktiviert den Bildcache von Cache-Warmup, weil bereits durch Media Manager Responsive indirekt alle Bilder beim Aufurf eines Artikels generiert werden.
+
+media_manager_responsive_donate = Weiterentwicklung fördern
+media_manager_responsive_info_donate = Mit einer Beauftragung des Addon-Entwicklers (Alexander Walther) unterstützt du die Weiterentwicklung und Verbesserung dieses Addons.
+
+media_manager_responsive_info_speed_up_title = Verbessere die Ladezeit deiner Website
+media_manager_responsive_info_speed_up_inactive = Um die Website-Performance deiner REDAXO-Websites weiter zu verbessern gibt es das Addon Speed Up!
+media_manager_responsive_info_media_manager_responsive_install = Mehr erfahren
