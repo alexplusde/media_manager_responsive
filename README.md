@@ -5,9 +5,9 @@
 
 REDAXO-Addon mit nützlichen Methoden im Umgang mit dem Picture-Element, responsiven Bilder, SVG-Ausgabe, u.v.m.
 
-Der erste Schritt: Einfach `rex_media::get()` durch `rex_media_plus::get()` in deinem Code ersetzen und los geht's.
-
-Der zweite Schritt: Eigene Responsive-Gruppen anlegen und Medientypen erstellen / zuordnen.
+1. Der erste Schritt: Einfach `rex_media::get()` durch `rex_media_plus::get()` in deinem Code ersetzen und los geht's.
+2. Der zweite Schritt: Eigene Responsive-Gruppen anlegen und Medientypen erstellen / zuordnen.
+3. Auf Wunsch: Das Addon Cache-Warmup drüberlaufen lassen. Es werden nur tatsächlich verwendete Bildprofil-Mediendatei-Kombinationen generiert. 
 
 ## Features
 
@@ -19,6 +19,7 @@ Der zweite Schritt: Eigene Responsive-Gruppen anlegen und Medientypen erstellen 
   * Cachebuster-URLs für Medien 
 * Optimiert für Google Structured Data - Meta-Informationen für die Google-Suchmaschine.
 * Kompatibel zu `FriendsOfRedaxo\minify_images` und `FriendsOfRedaxo\focuspoint`
+* Optimiert für https://github.com/FriendsOfREDAXO/cache_warmup
 
 ## `rex_media_plus` verwenden
 
@@ -137,6 +138,8 @@ Puh, statt dass jedes Bild nur ein Media-Manager-Profil durchläuft, sind es je 
 Bei einer Galerie mit 12 Bildern bedeutet dies statt 12 generierter Bilder nun bspw. 216 Bilder, deren Cache-Versionen erstellt werden.
 
 Ein entsprechend performantes Webhosting-Paket und ausreichend Speicherplatz werden daher empfohlen.
+
+Abhilfe schafft das Addon https://github.com/FriendsOfREDAXO/cache_warmup - da die Bilder zur Laufzeit generiert werden, können bei umfangreichen Seiten alle benötigten Bildkombinationen in einem Rutsch generiert werden.
 
 ## Lizenz
 
