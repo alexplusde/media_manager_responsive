@@ -9,8 +9,6 @@ Der erste Schritt: Einfach `rex_media::get()` durch `rex_media_plus::get()` in d
 
 Der zweite Schritt: Eigene Responsive-Gruppen anlegen und Medientypen erstellen / zuordnen.
 
-> DER NACHFOLGENDE TEIL DER README WIRD DERZEIT AN DEN NEUEN CODE ANGEGLICHEN UND IST ERST ZU RELEASE GÜLTIG
-
 ## Features
 
 * Vereinfachte Ausgabe von Picture-Elementen und Bildern mit srcset-Attributen
