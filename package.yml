@@ -11,7 +11,7 @@ requires:
 
 page:
     hidden: true
-
+    
 pages: 
     media_manager/media_manager_responsive:
         title: translate:media_manager_responsive_page
@@ -23,9 +23,9 @@ pages:
             settings:
                 title: translate:media_manager_responsive_page_settings
                 perm: admin
-    media_manager/overview/responsive:
-        title: translate:media_manager_responsive_page
-        subPath: README.md
+            docs:
+                title: translate:media_manager_responsive_page_docs
+                subPath: README.md
 
 default_config:
     cache_warmup: "enhanced"
