@@ -47,9 +47,13 @@ class rex_media_plus extends rex_media
         return '<img src="'.self::getFrontendUrl($this).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
     }
 
-    public function getImgBase64()
+    public function getImgBase64($only_data = false)
     {
-        return '<img src="data:image/'.$this->getType().';base64,'.base64_encode(rex_file::get(rex_path::media($this->name))).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+        $data = 'data:image/'.$this->getType().';base64,'.base64_encode(rex_file::get(rex_path::media($this->name)));
+        if ($only_data) {
+            return $data;
+        }
+        return '<img src="'.$data.'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
     }
 
     public function getSvg()
