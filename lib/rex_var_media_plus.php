@@ -31,7 +31,7 @@ class rex_var_media_plus extends rex_var
                         return self::quote($media->getSvg($profile));
                         break;
                     case 'background':
-                        return self::quote($media->getBackgroundStyles($group));
+                        return self::quote($media->getBackgroundStyles($group, $selector));
                         break;
                     default:
                         return self::quote($media->getImg($profile));

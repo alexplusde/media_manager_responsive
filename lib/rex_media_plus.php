@@ -34,9 +34,9 @@ class rex_media_plus extends rex_media
         return html_entity_decode($fragment->parse('media_manager_responsive/structured_data.php'));
     }
 
-    public function getBackgroundStyles($group_name)
+    public function getBackgroundStyles($group_name, $selector)
     {
-        return media_manager_type_group::getByGroup($group_name)->getBackgroundStyles();
+        return media_manager_type_group::getBackgroundStyles($this->name, $group_name, $selector);
     }
 
     public function getImg($profile = null)
