@@ -49,11 +49,31 @@ Liefert ein vollständiges Image-Element anhand eines Präfix inkl. `srcset=""`-
 
 Liefert ein vollständiges Image-Element anhand eines Präfix inkl. `srcset=""`-Attribut. Dazu muss es passende Media Manager Profile mit einer bestimmten Syntax geben, die unter "Media Manager Profile" in dieser Hilfe-Datei erklärt wird.
 
+### Beispiele mit REX_VARS
+
+```php
+/* ERWEITERT REX_MEDIA - Ein Bild wird optimiert ausgegeben */
+REX_MEDIA_PLUS[file="file.png" output="img" profile="small"]
+REX_MEDIA_PLUS[file="file.svg" output="svg"]
+REX_MEDIA_PLUS[file="file.jpg" output="img-base64"]
+REX_MEDIA_PLUS[file="file.jpg" output="img-src" profile="small"]
+
+/* NUTZT MEDIA MANAGER RESPONSIVE-GRUPPEN */
+REX_MEDIA_PLUS[file="file.jpg" output="picture" group="header"]
+REX_MEDIA_PLUS[file="file.jpg" output="background" group="header"]
+```
+
+### Beispiele mit PHP
+
+```php
+echo rex_media_plus::get("beispielbild.jpg")->getImg($profile);
+echo rex_media_plus::get("beispielbild.jpg")->getBase64();
+echo rex_media_plus::get("beispielbild.jpg")->getPicture($group);
+echo rex_media_plus::get("beispielbild.jpg")->getBackgroundStyles($group);
+```
 ## Medien Manager Responsive verwenden
 
-Wird erläutert.
-
-## Screenshots
+Wird erläutert. 
 
 ### Beispiel-Medientypen-Liste
 
