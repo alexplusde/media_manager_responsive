@@ -29,3 +29,7 @@ pages:
 
 default_config:
     cache_warmup: "enhanced"
+
+installer_ignore:
+  - composer.json
+  - composer.lock
