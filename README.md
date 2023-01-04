@@ -67,6 +67,7 @@ REX_MEDIA_PLUS[file="file.jpg" output="background" group="header"]
 
 ```php
 echo rex_media_plus::get("beispielbild.jpg")->getImg($profile);
+echo rex_media_plus::get("beispielbild.jpg")->setClass("img-fluid")->getImg($profile);
 echo rex_media_plus::get("beispielbild.jpg")->getBase64();
 echo rex_media_plus::get("beispielbild.jpg")->getPicture($group);
 echo rex_media_plus::get("beispielbild.jpg")->getBackgroundStyles($group);
