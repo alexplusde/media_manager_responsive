@@ -2,7 +2,9 @@
 
 class rex_media_plus extends rex_media
 {
-    private $loading = 'auto';
+    public $loading = 'auto';
+    public $class = "";
+    public $attributes = [];
 
     public function __construct()
     {
@@ -21,7 +23,31 @@ class rex_media_plus extends rex_media
         return $this;
     }
 
-    public function getStructuredData()
+    public function setClass($class)
+    {
+        $this->class = $class;
+
+        return $this;
+    }
+    public function getClass() :string
+    {
+        return $this->class;
+    }
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+
+        return $this;
+    }
+    public function getAttributes()
+    {
+        if ($this->attributes === null) {
+            return [];
+        }
+        return $this->attributes;
+    }
+
+    public function getStructuredData() :string
     {
         $fragment = new rex_fragment();
         $fragment->setVar('title', $this->getTitle() ?? '');
@@ -34,17 +60,17 @@ class rex_media_plus extends rex_media
         return html_entity_decode($fragment->parse('media_manager_responsive/structured_data.php'));
     }
 
-    public function getBackgroundStyles($group_name, $selector)
+    public function getBackgroundStyles($group_name) :string
     {
-        return media_manager_type_group::getBackgroundStyles($this->name, $group_name, $selector);
+        return media_manager_type_group::getByGroup($group_name)->getBackgroundStyles();
     }
 
     public function getImg($profile = null)
     {
         if ($profile) {
-            return '<img src="'.self::getFrontendUrl($this, $profile).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+            return '<img '.implode(' ', $this->getAttributes()).' class="'.$this->getClass().'" src="'.self::getFrontendUrl($this, $profile).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
         }
-        return '<img src="'.self::getFrontendUrl($this).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+        return '<img '.implode(' ', $this->getAttributes()).' class="'.$this->getClass().'" src="'.self::getFrontendUrl($this).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
     }
 
     public function getImgBase64($only_data = false)
@@ -53,7 +79,7 @@ class rex_media_plus extends rex_media
         if ($only_data) {
             return $data;
         }
-        return '<img src="'.$data.'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+        return '<img '.implode(' ', $this->getAttributes()).' class="'.$this->getClass().'" src="'.$data.'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
     }
 
     public function getSvg()
