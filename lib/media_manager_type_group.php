@@ -30,10 +30,10 @@ class media_manager_type_group extends \rex_yform_manager_dataset
         return rex_media_manager::create($type, $file)->getMedia();
     }
 
-    public static function getPicture($groupname, $file)
+    public static function getPicture($groupname, $media_plus)
     {
-        $media_plus = rex_media_plus::get($file);
         if ($media_plus) {
+            $file = $media_plus->getFilename();
             if ('image/svg+xml' == $media_plus->getType()) {
                 return $media_plus->getSvg();
             }
@@ -61,7 +61,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
             $cached_media = self::getMediaCacheFile($group->getFallback(), $file);
 
             if ($cached_media instanceof rex_managed_media) {
-                $picture[] = '<img type="image/'.$cached_media->getFormat().'" src="'.rex_media_plus::getFrontendUrl($cached_media, $group->getFallback(), $file).'" width="'.$cached_media->getWidth().'" height="'.$cached_media->getHeight().'" alt="'.$media_plus->getTitle().'" />';
+                $picture[] = '<img '.implode(' ', $media_plus->getAttributes()).' class="'.$media_plus->getClass().'" type="image/'.$cached_media->getFormat().'" src="'.rex_media_plus::getFrontendUrl($cached_media, $group->getFallback(), $file).'" width="'.$cached_media->getWidth().'" height="'.$cached_media->getHeight().'" alt="'.$media_plus->getTitle().'" />';
             }
     
             $picture[] = '</picture>';

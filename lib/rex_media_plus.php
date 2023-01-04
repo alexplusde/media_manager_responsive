@@ -92,7 +92,7 @@ class rex_media_plus extends rex_media
 
     public function getPicture($groupname)
     {
-        return media_manager_type_group::getPicture($groupname, $this->getFileName());
+        return media_manager_type_group::getPicture($groupname, $this);
     }
 
     public static function getFrontendUrl($media, $profile = null, $show_timestamp = true)
