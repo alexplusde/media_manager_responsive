@@ -23,7 +23,7 @@ class rex_media_plus extends rex_media
         return $this;
     }
 
-    public function setClass($class)
+    public function setClass(:string $class)
     {
         $this->class = $class;
 
@@ -33,17 +33,14 @@ class rex_media_plus extends rex_media
     {
         return $this->class;
     }
-    public function setAttributes($attributes)
+    public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
 
         return $this;
     }
-    public function getAttributes()
+    public function getAttributes() :array
     {
-        if ($this->attributes === null) {
-            return [];
-        }
         return $this->attributes;
     }
 
@@ -60,7 +57,7 @@ class rex_media_plus extends rex_media
         return html_entity_decode($fragment->parse('media_manager_responsive/structured_data.php'));
     }
 
-    public function getBackgroundStyles($group_name, $selector)
+    public function getBackgroundStyles(string $group_name, string $selector)
     {
         return media_manager_type_group::getBackgroundStyles($this->getFilename(), $group_name, $selector);
     }
