@@ -83,7 +83,7 @@ class rex_media_plus extends rex_media
     {
         return
         "<!-- ".$this->name." -->".
-        PHP_EOL.rex_file::get(rex_path::media($this->name)).PHP.EOL.
+        PHP_EOL.rex_file::get(rex_path::media($this->name)).PHP_EOL.
         "<!-- / ".$this->name." -->";
     }
 
