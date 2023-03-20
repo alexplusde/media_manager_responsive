@@ -23,7 +23,7 @@ class rex_media_plus extends rex_media
         return $this;
     }
 
-    public function setClass(:string $class)
+    public function setClass(string $class)
     {
         $this->class = $class;
 
