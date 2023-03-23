@@ -8,6 +8,7 @@ class rex_media_plus extends rex_media
 
     public function __construct()
     {
+        $this->attributes = [];
         return $this;
     }
 
@@ -41,7 +42,7 @@ class rex_media_plus extends rex_media
     }
     public function getAttributes() :array
     {
-        return $this->attributes;
+        return $this->attributes ?? [];
     }
 
     public function getStructuredData() :string
