@@ -14,7 +14,6 @@ $mediaEffects = rex_sql::factory()->setDebug(0)->getArray("SELECT E.effect, E.pa
 
 rex_file::put(rex_path::addon("media_plus", "install/rex_media_manager_type_effects.json"), json_encode($mediaEffects));
 */
-<?php
 
 rex_config::removeNamespace("media_manager_responsive");
 if (rex_addon::get('yform')->isAvailable() && !rex::isSafeMode()) {
