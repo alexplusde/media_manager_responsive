@@ -12,6 +12,14 @@ $select->setSize(1);
 $select->addOption($this->i18n('media_manager_responsive_cache_warmup_original'), 'original');
 $select->addOption($this->i18n('media_manager_responsive_cache_warmup_enhanced'), 'enhanced');
 
+$field = $form->addSelectField('thumbhash');
+$field->setLabel($this->i18n('media_manager_responsive_thumbhash_label'));
+$field->setNotice($this->i18n('media_manager_responsive_thumbhash_notice'));
+$select = $field->getSelect();
+$select->setSize(1);
+$select->addOption($this->i18n('media_manager_responsive_thumbhash_enabled'), 'enabled');
+$select->addOption($this->i18n('media_manager_responsive_thumbhash_disabled'), 'disabled');
+
 $fragment = new rex_fragment();
 $fragment->setVar('class', 'edit', false);
 $fragment->setVar('title', $this->i18n('media_manager_responsive_settings'), false);
@@ -19,11 +27,11 @@ $fragment->setVar('body', $form->get(), false);
 
 ?>
 <div class="row">
-    <div class="col-lg-8">
-        <?= $fragment->parse('core/page/section.php') ?>
-    </div>
-    <div class="col-lg-4">
-        <?php
+	<div class="col-lg-8">
+		<?= $fragment->parse('core/page/section.php') ?>
+	</div>
+	<div class="col-lg-4">
+		<?php
 
 $anchor = '<a target="_blank" href="https://donate.alexplus.de/?addon=media_manager_responsive"><img src="'.rex_url::addonAssets('media_manager_responsive', 'jetzt-spenden.svg').'" style="width: 100% max-width: 400px;"></a>';
 
@@ -52,6 +60,6 @@ if (isset($packages['media_manager_responsive'])) {
         echo rex_view::info($this->i18n('media_manager_responsive_update_available') . " " .$latest_version);
     };
 };
-        ?>
-    </div>
+?>
+	</div>
 </div>
