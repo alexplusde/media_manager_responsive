@@ -88,6 +88,26 @@ class rex_media_plus extends rex_media
         "<!-- / ".$this->name." -->";
     }
 
+    public function getContent()
+    {
+        return file_get_contents(rex_path::media($this->getFileName()));
+    }
+    public function getThumbhash() :?string
+    {
+        extract_size_and_pixels_with_imagick($this->getContent());
+        return Thumbhash::RGBAToHash($width, $height, $pixels);
+    }
+
+    public function getThumbhashDataUrl() :?string
+    {
+        return Thumbhash::toDataURL($this->getThumbhash());
+    }
+
+    public function getThumbhashBase64() :?string
+    {
+        return rtrim(base64_encode(implode(array_map("chr", $this->getThumbhash()))), '=');
+    }
+    
     public function getPicture($groupname)
     {
         return media_manager_type_group::getPicture($groupname, $this);
