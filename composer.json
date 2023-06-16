@@ -1,14 +1,10 @@
 {
-    "name": "alexplus/media_manager_responsive",
-    "type": "redaxo-addon",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Alexander Walther",
-            "email": "mail@alexplus.de"
-        }
-    ],
-    "require": {
-        "rhukster/dom-sanitizer": "^1.0"
-    }
+  "require-dev": {
+    "redaxo/php-cs-fixer-config": "^2.0",
+    "friendsofphp/php-cs-fixer": "^3.14"
+  },
+  "scripts": {
+    "cs-dry": "php-cs-fixer fix -v --ansi --dry-run --config=.php-cs-fixer.dist.php",
+    "cs-fix": "php-cs-fixer fix -v --ansi --config=.php-cs-fixer.dist.php"
+  }
 }
