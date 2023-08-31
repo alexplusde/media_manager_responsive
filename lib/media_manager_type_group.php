@@ -38,7 +38,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
                 return $media_plus->getSvg();
             }
 
-            $picture[] = '<picture>';
+            $picture[] = '<picture data-group-profile="'.$groupname.'">';
             $group = self::getByGroup($groupname);
             $types = self::getTypes($groupname);
 
