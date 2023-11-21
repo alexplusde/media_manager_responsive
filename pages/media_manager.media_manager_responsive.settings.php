@@ -2,7 +2,7 @@
 
 $addon = rex_addon::get('media_manager_responsive');
 
-$form = rex_config_form::factory($addon->name);
+$form = rex_config_form::factory($addon->getName());
 
 $field = $form->addSelectField('cache_warmup');
 $field->setLabel($this->i18n('media_manager_responsive_cache_warmup_label'));
@@ -19,13 +19,13 @@ $fragment->setVar('body', $form->get(), false);
 
 ?>
 <div class="row">
-    <div class="col-lg-8">
-        <?= $fragment->parse('core/page/section.php') ?>
-    </div>
-    <div class="col-lg-4">
-        <?php
+	<div class="col-lg-8">
+		<?= $fragment->parse('core/page/section.php') ?>
+	</div>
+	<div class="col-lg-4">
+		<?php
 
-$anchor = '<a target="_blank" href="https://donate.alexplus.de/?addon=media_manager_responsive"><img src="'.rex_url::addonAssets('media_manager_responsive', 'jetzt-spenden.svg').'" style="width: 100% max-width: 400px;"></a>';
+$anchor = '<a target="_blank" href="https://donate.alexplus.de/?addon=media_manager_responsive"><img src="'.rex_url::addonAssets('media_manager_responsive', 'jetzt-beauftragen.svg').'" style="width: 100% max-width: 400px;"></a>';
 
 $fragment = new rex_fragment();
 $fragment->setVar('class', 'info', false);
@@ -52,6 +52,6 @@ if (isset($packages['media_manager_responsive'])) {
         echo rex_view::info($this->i18n('media_manager_responsive_update_available') . " " .$latest_version);
     };
 };
-        ?>
-    </div>
+?>
+	</div>
 </div>
