@@ -1,4 +1,5 @@
 <?php
+$addon = rex_addon::get('media_manager_responsive');
 
 $table_name = 'rex_media_manager_type_group';
 
@@ -13,11 +14,9 @@ $table_name = 'rex_media_manager_type_group';
     ['table_name'=>$table_name]
 );
 
-$yform = $this->getProperty('yform', []);
+$yform = $addon->getProperty('yform', []);
 $yform = $yform[\rex_be_controller::getCurrentPage()] ?? [];
 
-if ($table_name) {
-    $_REQUEST['table_name'] = $table_name;
-}
+$_REQUEST['table_name'] = $table_name;
 
 include \rex_path::plugin('yform', 'manager', 'pages/data_edit.php');

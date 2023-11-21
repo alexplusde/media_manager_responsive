@@ -2,29 +2,28 @@
 
 class rex_media_plus extends rex_media
 {
-    public $loading = 'auto';
-    public $class = "";
-    public $attributes = [];
+    public string $loading = 'auto';
+    public string $class = "";
+    public array $attributes = [];
 
     public function __construct()
     {
         $this->attributes = [];
-        return $this;
     }
 
-    public function getLoading()
+    public function getLoading() :string
     {
         return $this->loading;
     }
 
-    public function setLoading($loading)
+    public function setLoading(string $loading) :rex_media_plus
     {
         $this->loading = $loading;
 
         return $this;
     }
 
-    public function setClass(string $class)
+    public function setClass(string $class) :rex_media_plus
     {
         $this->class = $class;
 
@@ -34,7 +33,7 @@ class rex_media_plus extends rex_media
     {
         return $this->class;
     }
-    public function setAttributes(array $attributes)
+    public function setAttributes(array $attributes) :rex_media_plus
     {
         $this->attributes = $attributes;
 
@@ -49,7 +48,7 @@ class rex_media_plus extends rex_media
     {
         $fragment = new rex_fragment();
         $fragment->setVar('title', $this->getTitle() ?? '');
-        $fragment->setVar('description', $this->getValue('med_description') ?? '');
+        $fragment->setVar('description', $this->getValue('med_description'));
         $fragment->setVar('author', $this->getValue('med_copyright') ?? '');
         $fragment->setVar('location', $this->getValue('med_location') ?? '');
         $fragment->setVar('name', $this->getValue('name'));
@@ -63,7 +62,7 @@ class rex_media_plus extends rex_media
         return media_manager_type_group::getBackgroundStyles($this->getFilename(), $group_name, $selector);
     }
 
-    public function getImg($profile = null)
+    public function getImg(string $profile = null) :string
     {
         if ($profile) {
             return '<img '.implode(' ', $this->getAttributes()).' class="'.$this->getClass().'" src="'.self::getFrontendUrl($this, $profile).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
@@ -71,7 +70,7 @@ class rex_media_plus extends rex_media
         return '<img '.implode(' ', $this->getAttributes()).' class="'.$this->getClass().'" src="'.self::getFrontendUrl($this).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
     }
 
-    public function getImgBase64($only_data = false)
+    public function getImgBase64(bool $only_data = false) :string
     {
         $data = 'data:image/'.$this->getType().';base64,'.base64_encode(rex_file::get(rex_path::media($this->name)));
         if ($only_data) {
@@ -80,7 +79,7 @@ class rex_media_plus extends rex_media
         return '<img '.implode(' ', $this->getAttributes()).' class="'.$this->getClass().'" src="'.$data.'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
     }
 
-    public function getSvg()
+    public function getSvg() :string
     {
         return
         "<!-- ".$this->name." -->".
@@ -88,12 +87,12 @@ class rex_media_plus extends rex_media
         "<!-- / ".$this->name." -->";
     }
 
-    public function getPicture($groupname)
+    public function getPicture(string $groupname) :string
     {
         return media_manager_type_group::getPicture($groupname, $this);
     }
 
-    public static function getFrontendUrl($media, $profile = null, $show_timestamp = true)
+    public static function getFrontendUrl(rex_media|rex_media_plus|rex_managed_media $media, string $profile = null, bool $show_timestamp = true) :string
     {
         if ($media instanceof rex_media or $media instanceof rex_media_plus) {
             $filename = $media->getFileName();
@@ -121,7 +120,7 @@ class rex_media_plus extends rex_media
         return rex_url::media($filename) . $timestamp;
     }
 
-    public static function mediapool_updated_svg_viewbox(rex_extension_point $ep)
+    public static function mediapool_updated_svg_viewbox(rex_extension_point $ep) :rex_extension_point
     {
         $subject = $ep->getSubject();
         $filename = $ep->getParam('filename');
@@ -134,8 +133,8 @@ class rex_media_plus extends rex_media
 
             $viewBox = $xml['viewBox'] ? $xml['viewBox']->__toString() : 0;
             $viewBox = preg_split('/[\s,]+/', $viewBox);
-            $width = (float) ($viewBox[2] - $viewBox[0] ?? 0);
-            $height = (float) ($viewBox[3] - $viewBox[1] ?? 0);
+            $width = (float) ((int) $viewBox[2] - (int) $viewBox[0] ?? 0);
+            $height = (float) ((int) $viewBox[3] - (int) $viewBox[1] ?? 0);
 
             if (!$height && !$width) {
                 $width = $xml['width'] ? $xml['width']->__toString() : 0;
