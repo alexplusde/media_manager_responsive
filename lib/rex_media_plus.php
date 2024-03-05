@@ -92,6 +92,11 @@ class rex_media_plus extends rex_media
         return media_manager_type_group::getPicture($groupname, $this);
     }
 
+    public function setTitle (string $value = '') :void
+    {
+        $this->title = $value;
+    }
+    
     public static function getFrontendUrl(rex_media|rex_media_plus|rex_managed_media $media, string $profile = null, bool $show_timestamp = true) :string
     {
         if ($media instanceof rex_media or $media instanceof rex_media_plus) {
