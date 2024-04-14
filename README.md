@@ -82,6 +82,8 @@ Wird erläutert.
 
 ### Beispiel Responsive-Profil
 
+> Hinweis: Der Screenshot zeigt die Reihenfolge gerade verkehrt herum zu dem, wie es sein sollte. Eine automatische Sortierung ist nicht möglich, da es verschiedene Möglichkeiten und Stile gibt, die Profile zu definieren. Prüfe die richtige Lade-Reihenfolge von Dateiformat (type) und Medium (media) in Abhängigkeit der gewählten Einstellungen in der Broser-Entwicklerkonsole. 
+
 ![image](https://user-images.githubusercontent.com/3855487/162643004-cc5614c2-e043-4a9b-a118-231853608b53.png)
 
 ### Beispiel-Code `<picture>`-Element
