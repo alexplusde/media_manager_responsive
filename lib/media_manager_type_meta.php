@@ -15,10 +15,10 @@ class media_manager_type_meta extends \rex_yform_manager_dataset
     }
     public function getMinWidth() :int
     {
-        return $this->getValue('min_width');
+        return (int) $this->getValue('min_width');
     }
     public function getMaxWidth() :int
     {
-        return $this->getValue('max_width');
+        return (int) $this->getValue('max_width');
     }
 }
