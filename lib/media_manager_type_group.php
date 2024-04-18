@@ -10,7 +10,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
     {
         return self::query()->where('name', $group_name)->findOne();
     }
-    private function getFallback() :int
+    private function getFallback() :string
     {
         return $this->getValue('fallback_id');
     }
@@ -52,10 +52,10 @@ class media_manager_type_group extends \rex_yform_manager_dataset
                 $cached_media = self::getMediaCacheFile($type->getType(), $file);
                 if ($cached_media instanceof rex_managed_media) {
                     $media['devices'] = "all";
-                    if ($type->getMinWidth() != "") {
+                    if ($type->getMinWidth() > 0) {
                         $media['min_width'] = '(min-width: '.$type->getMinWidth().')';
                     }
-                    if ($type->getMaxWidth() != "") {
+                    if ($type->getMaxWidth() > 0) {
                         $media['max_width'] = '(max-width: '.$type->getMaxWidth().')';
                     }
                     $media_attr = implode(" AND ", $media);
@@ -116,10 +116,10 @@ class media_manager_type_group extends \rex_yform_manager_dataset
             $cached_media = rex_media_manager::create($type->getType(), $file)->getMedia();
             if ($cached_media instanceof rex_managed_media) {
                 $media['devices'] = "all";
-                if ($type->getMinWidth() != "") {
+                if ($type->getMinWidth() > 0) {
                     $media['min_width'] = '(min-width: '.$type->getMinWidth().')';
                 }
-                if ($type->getMaxWidth() != "") {
+                if ($type->getMaxWidth() > 0) {
                     $media['max_width'] = '(max-width: '.$type->getMaxWidth().')';
                 }
                 $media_attr = implode(" and ", $media);
