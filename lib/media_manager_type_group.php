@@ -12,7 +12,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
     }
     private function getFallback() :int
     {
-        return $this->getValue('fallback_id');
+        return (int) $this->getValue('fallback_id');
     }
 
     /** @api */
