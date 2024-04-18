@@ -52,10 +52,10 @@ class media_manager_type_group extends \rex_yform_manager_dataset
                 $cached_media = self::getMediaCacheFile($type->getType(), $file);
                 if ($cached_media instanceof rex_managed_media) {
                     $media['devices'] = "all";
-                    if ($type->getMinWidth() > 0) {
+                    if ($type->getMinWidth() != "") {
                         $media['min_width'] = '(min-width: '.$type->getMinWidth().')';
                     }
-                    if ($type->getMaxWidth() > 0) {
+                    if ($type->getMaxWidth() != "") {
                         $media['max_width'] = '(max-width: '.$type->getMaxWidth().')';
                     }
                     $media_attr = implode(" AND ", $media);
@@ -116,10 +116,10 @@ class media_manager_type_group extends \rex_yform_manager_dataset
             $cached_media = rex_media_manager::create($type->getType(), $file)->getMedia();
             if ($cached_media instanceof rex_managed_media) {
                 $media['devices'] = "all";
-                if ($type->getMinWidth() > 0) {
+                if ($type->getMinWidth() != "") {
                     $media['min_width'] = '(min-width: '.$type->getMinWidth().')';
                 }
-                if ($type->getMaxWidth() > 0) {
+                if ($type->getMaxWidth() != "") {
                     $media['max_width'] = '(max-width: '.$type->getMaxWidth().')';
                 }
                 $media_attr = implode(" and ", $media);
