@@ -10,7 +10,7 @@ class media_manager_type_group extends \rex_yform_manager_dataset
     {
         return self::query()->where('name', $group_name)->findOne();
     }
-    private function getFallback() :int
+    private function getFallback() :string
     {
         return $this->getValue('fallback_id');
     }
