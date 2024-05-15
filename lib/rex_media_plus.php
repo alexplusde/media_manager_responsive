@@ -125,9 +125,8 @@ class rex_media_plus extends rex_media
         return rex_url::media($filename) . $timestamp;
     }
 
-    public static function mediapool_updated_svg_viewbox(rex_extension_point $ep) :rex_extension_point
+    public static function mediapool_updated_svg_viewbox(rex_extension_point $ep)
     {
-        $subject = $ep->getSubject();
         $filename = $ep->getParam('filename');
 
         $media = rex_media::get($filename);
@@ -153,7 +152,6 @@ class rex_media_plus extends rex_media
             $sql->setValue('height', $height);
             $sql->update();
         }
-
-        return $subject;
+        
     }
 }
