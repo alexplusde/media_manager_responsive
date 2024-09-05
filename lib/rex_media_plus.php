@@ -3,7 +3,7 @@
 class rex_media_plus extends rex_media
 {
     public string $loading = 'auto';
-    public string $class = "";
+    public string $class = '';
     public array $plus_attributes = [];
 
     public function __construct()
@@ -11,40 +11,43 @@ class rex_media_plus extends rex_media
         $this->attributes = [];
     }
 
-    public function getLoading() :string
+    public function getLoading(): string
     {
         return $this->loading;
     }
 
-    public function setLoading(string $loading) :rex_media_plus
+    public function setLoading(string $loading): self
     {
         $this->loading = $loading;
 
         return $this;
     }
 
-    public function setClass(string $class) :rex_media_plus
+    public function setClass(string $class): self
     {
         $this->class = $class;
 
         return $this;
     }
-    public function getClass() :string
+
+    public function getClass(): string
     {
         return $this->class;
     }
-    public function setAttributes(array $attributes) :rex_media_plus
+
+    public function setAttributes(array $attributes): self
     {
         $this->plus_attributes = $attributes;
 
         return $this;
     }
-    public function getAttributes() :array
+
+    public function getAttributes(): array
     {
         return $this->plus_attributes ?? [];
     }
 
-    public function getStructuredData() :string
+    public function getStructuredData(): string
     {
         $fragment = new rex_fragment();
         $fragment->setVar('title', $this->getTitle() ?? '');
@@ -62,48 +65,48 @@ class rex_media_plus extends rex_media
         return media_manager_type_group::getBackgroundStyles($this->getFilename(), $group_name, $selector);
     }
 
-    public function getImg(string $profile = null) :string
+    public function getImg(?string $profile = null): string
     {
         if ($profile) {
-            return '<img '.implode(' ', $this->getAttributes()).' class="'.$this->getClass().'" src="'.self::getFrontendUrl($this, $profile).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+            return '<img ' . implode(' ', $this->getAttributes()) . ' class="' . $this->getClass() . '" src="' . self::getFrontendUrl($this, $profile) . '" alt="' . $this->getTitle() . '" width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" />';
         }
-        return '<img '.implode(' ', $this->getAttributes()).' class="'.$this->getClass().'" src="'.self::getFrontendUrl($this).'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+        return '<img ' . implode(' ', $this->getAttributes()) . ' class="' . $this->getClass() . '" src="' . self::getFrontendUrl($this) . '" alt="' . $this->getTitle() . '" width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" />';
     }
 
-    public function getImgBase64(bool $only_data = false) :string
+    public function getImgBase64(bool $only_data = false): string
     {
-        $data = 'data:image/'.$this->getType().';base64,'.base64_encode(rex_file::get(rex_path::media($this->name)));
+        $data = 'data:image/' . $this->getType() . ';base64,' . base64_encode(rex_file::get(rex_path::media($this->name)));
         if ($only_data) {
             return $data;
         }
-        return '<img '.implode(' ', $this->getAttributes()).' class="'.$this->getClass().'" src="'.$data.'" alt="'.$this->getTitle().'" width="'.$this->getWidth().'" height="'.$this->getHeight().'" />';
+        return '<img ' . implode(' ', $this->getAttributes()) . ' class="' . $this->getClass() . '" src="' . $data . '" alt="' . $this->getTitle() . '" width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" />';
     }
 
-    public function getSvg() :string
+    public function getSvg(): string
     {
         return
-        "<!-- ".$this->name." -->".
-        PHP_EOL.rex_file::get(rex_path::media($this->name)).PHP_EOL.
-        "<!-- / ".$this->name." -->";
+        '<!-- ' . $this->name . ' -->' .
+        PHP_EOL . rex_file::get(rex_path::media($this->name)) . PHP_EOL .
+        '<!-- / ' . $this->name . ' -->';
     }
 
-    public function getPicture(string $groupname) :string
+    public function getPicture(string $groupname): string
     {
         return media_manager_type_group::getPicture($groupname, $this);
     }
 
-    public function setTitle (string $value = '') :void
+    public function setTitle(string $value = ''): void
     {
         $this->title = $value;
     }
-    
-    public static function getFrontendUrl(rex_media|rex_media_plus|rex_managed_media $media, string $profile = null, bool $show_timestamp = true) :string
+
+    public static function getFrontendUrl(rex_media|self|rex_managed_media $media, ?string $profile = null, bool $show_timestamp = true): string
     {
-        if ($media instanceof rex_media or $media instanceof rex_media_plus) {
+        if ($media instanceof rex_media || $media instanceof self) {
             $filename = $media->getFileName();
         } elseif ($media instanceof rex_managed_media) {
-            # $filename = $media->getMediaFilename();
-            # Workaround wg. https://github.com/redaxo/redaxo/issues/4519#issuecomment-1183515367
+            // $filename = $media->getMediaFilename();
+            // Workaround wg. https://github.com/redaxo/redaxo/issues/4519#issuecomment-1183515367
             $path = explode(DIRECTORY_SEPARATOR, $media->getMediaPath());
             $filename = array_pop($path);
         }
@@ -112,14 +115,14 @@ class rex_media_plus extends rex_media
 
         if ($show_timestamp) {
             if ($media instanceof rex_managed_media) {
-                $timestamp = '?timestamp='.filectime($media->getSourcePath());
-            } elseif ($media instanceof rex_media or $media instanceof rex_media_plus) {
-                $timestamp = '?timestamp='.filectime(rex_path::media($filename));
+                $timestamp = '?timestamp=' . filectime($media->getSourcePath());
+            } elseif ($media instanceof rex_media || $media instanceof self) {
+                $timestamp = '?timestamp=' . filectime(rex_path::media($filename));
             }
         }
 
         if ($profile) {
-            return rex_url::media($profile. '/'. $filename) . $timestamp;
+            return rex_url::media($profile . '/' . $filename) . $timestamp;
         }
 
         return rex_url::media($filename) . $timestamp;
@@ -134,7 +137,6 @@ class rex_media_plus extends rex_media
         if ('image/svg+xml' == $media->getType()) {
             $xml = simplexml_load_file(rex_path::media($filename));
 
-
             $viewBox = $xml['viewBox'] ? $xml['viewBox']->__toString() : 0;
             $viewBox = preg_split('/[\s,]+/', $viewBox);
             $width = (float) ((int) $viewBox[2] - (int) $viewBox[0] ?? 0);
@@ -146,12 +148,11 @@ class rex_media_plus extends rex_media
             }
 
             $sql = rex_sql::factory();
-            $sql->setWhere('filename="'.$filename.'"');
+            $sql->setWhere('filename="' . $filename . '"');
             $sql->setTable('rex_media');
             $sql->setValue('width', $width);
             $sql->setValue('height', $height);
             $sql->update();
         }
-        
     }
 }

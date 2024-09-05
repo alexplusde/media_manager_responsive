@@ -1,6 +1,6 @@
 <?php
 /**
- *     REX_MEDIA_PLUS[file="file.jpg" output="inline" profile="small" group="header"] // Datei file.jpg aus dem Assets-Ordner
+ *     REX_MEDIA_PLUS[file="file.jpg" output="inline" profile="small" group="header"] // Datei file.jpg aus dem Assets-Ordner.
  */
 class rex_var_media_plus extends rex_var
 {

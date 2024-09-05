@@ -2,7 +2,7 @@
 
 $addon = rex_addon::get('media_manager_responsive');
 
-if(rex_addon::get('yform') && rex_addon::get('yform')->isAvailable()) {
+if (rex_addon::get('yform') && rex_addon::get('yform')->isAvailable()) {
     rex_yform_manager_table_api::importTablesets(rex_file::get(rex_path::addon($addon->getName(), 'install/media_manager_responsive.tableset.json')));
     rex_yform_manager_table::deleteCache();
 }

@@ -25,16 +25,16 @@ $fragment->setVar('body', $form->get(), false);
 	<div class="col-lg-4">
 		<?php
 
-$anchor = '<a target="_blank" href="https://donate.alexplus.de/?addon=media_manager_responsive"><img src="'.rex_url::addonAssets('media_manager_responsive', 'jetzt-spenden.svg').'" style="width: 100% max-width: 400px;"></a>';
+$anchor = '<a target="_blank" href="https://donate.alexplus.de/?addon=media_manager_responsive"><img src="' . rex_url::addonAssets('media_manager_responsive', 'jetzt-spenden.svg') . '" style="width: 100% max-width: 400px;"></a>';
 
 $fragment = new rex_fragment();
 $fragment->setVar('class', 'info', false);
 $fragment->setVar('title', $addon->i18n('media_manager_responsive_donate'), false);
 $fragment->setVar('body', '<p>' . $addon->i18n('media_manager_responsive_info_donate') . '</p>' . $anchor, false);
-echo !rex_config::get("alexplusde", "donated") ? $fragment->parse('core/page/section.php') : "";
+echo !rex_config::get('alexplusde', 'donated') ? $fragment->parse('core/page/section.php') : '';
 
 if (rex_addon::get('speed_up')->isAvailable()) {
-    $anchor = '<a target="_blank" href="https://github.com/alexplusde/speed_up/">'.$addon->i18n('media_manager_responsive_info_media_manager_responsive_install').'</a>';
+    $anchor = '<a target="_blank" href="https://github.com/alexplusde/speed_up/">' . $addon->i18n('media_manager_responsive_info_media_manager_responsive_install') . '</a>';
     $fragment = new rex_fragment();
     $fragment->setVar('class', 'info', false);
     $fragment->setVar('title', $addon->i18n('media_manager_responsive_info_speed_up_title'), false);
@@ -48,10 +48,10 @@ if (isset($packages['media_manager_responsive'])) {
     if (isset($package['files'])) {
         $latest_version = array_pop($updates)['version'];
     }
-    if (rex_version::compare($latest_version, $current_version, ">")) {
-        echo rex_view::info($addon->i18n('media_manager_responsive_update_available') . " " .$latest_version);
-    };
-};
+    if (rex_version::compare($latest_version, $current_version, '>')) {
+        echo rex_view::info($addon->i18n('media_manager_responsive_update_available') . ' ' . $latest_version);
+    }
+}
 ?>
 	</div>
 </div>
