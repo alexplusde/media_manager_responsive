@@ -9,11 +9,7 @@ class Type extends rex_yform_manager_dataset
 {
     /**
      * @api
-     * @return null|rex_yform_manager_collection 
-     * @throws rex_exception 
-     * @throws InvalidArgumentException 
-     * @throws RuntimeException 
-     * @throws rex_sql_exception 
+     * @return null|rex_yform_manager_collection<TypeGroup>
      */
     public function getGroup(): ?rex_yform_manager_collection
     {

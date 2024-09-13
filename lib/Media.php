@@ -16,7 +16,9 @@ class Media extends rex_media
     public string $loading = 'auto';
     /** @api */
     public string $class = '';
-    /** @api */
+    /**
+     * @var array<string> 
+     * @api */
     public array $plus_attributes = [];
 
     public function __construct()
@@ -68,7 +70,7 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param array $attributes 
+     * @param array<string> $attributes 
      * @return Media 
      */
     public function setAttributes(array $attributes): self
@@ -80,7 +82,7 @@ class Media extends rex_media
 
     /**
      * @api
-     * @return array 
+     * @return array<string>
      */
     public function getAttributes(): array
     {
@@ -112,7 +114,7 @@ class Media extends rex_media
      */
     public function getBackgroundStyles(string $group_name, string $selector)
     {
-        return TypeGroup::getBackgroundStyles($this->getFilename(), $group_name, $selector);
+        return TypeGroup::getBackgroundStyles($this->getFileName(), $group_name, $selector);
     }
 
     /**
@@ -185,7 +187,7 @@ class Media extends rex_media
     {
         if ($media instanceof rex_media || $media instanceof self) {
             $filename = $media->getFileName();
-        } elseif ($media instanceof rex_managed_media) {
+        } else {
             // $filename = $media->getMediaFilename();
             // Workaround wg. https://github.com/redaxo/redaxo/issues/4519#issuecomment-1183515367
             $path = explode(DIRECTORY_SEPARATOR, $media->getMediaPath());
@@ -197,7 +199,7 @@ class Media extends rex_media
         if ($show_timestamp) {
             if ($media instanceof rex_managed_media) {
                 $timestamp = '?timestamp=' . filectime($media->getSourcePath());
-            } elseif ($media instanceof rex_media || $media instanceof self) {
+            } else {
                 $timestamp = '?timestamp=' . filectime(rex_path::media($filename));
             }
         }
@@ -223,14 +225,14 @@ class Media extends rex_media
         if ($media !== null && 'image/svg+xml' === $media->getType()) {
             $xml = simplexml_load_file(rex_path::media($filename));
 
-            $viewBox = $xml['viewBox'] ? $xml['viewBox']->__toString() : 0;
+            $viewBox = $xml['viewBox'] ? $xml['viewBox']->__toString() : '';
             $viewBox = preg_split('/[\s,]+/', $viewBox);
 
             $width = 0;
             $height = 0;
 
-            $width = (int) ((int) $viewBox[2] - (int) $viewBox[0]);
-            $height = (int) ((int) $viewBox[3] - (int) $viewBox[1]);
+            $width = ((int) $viewBox[2] - (int) $viewBox[0]);
+            $height = ((int) $viewBox[3] - (int) $viewBox[1]);
 
 
             if ($height === 0 && $width === 0 && isset($xml['width']) && isset($xml['height'])) {

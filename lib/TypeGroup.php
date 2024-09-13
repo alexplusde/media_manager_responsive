@@ -27,18 +27,22 @@ class TypeGroup extends rex_yform_manager_dataset
     }
 
     /** @api */
-    private function getMeta(): string
+    private function getMeta(): mixed
     {
         return $this->getValue('meta');
     }
 
     private static function getTypes(string $group_name = ''): ?rex_yform_manager_collection
     {
-        if ($group_name) {
-            $group = self::getByGroup($group_name);
-            return Type::query()->where('group_id', $group->getId())->orderBy('prio')->find();
+        if ($group_name === '') {
+            return Type::query()->orderBy('prio')->find();
         }
-        return Type::query()->orderBy('prio')->find();
+        $group = self::getByGroup($group_name);
+        if ($group === null) {
+            return null;
+        }
+        return Type::query()->where('group_id', $group->getId())->orderBy('prio')->find();
+
     }
 
     private static function getMediaCacheFile(string $type, string $file): rex_managed_media
@@ -62,43 +66,43 @@ class TypeGroup extends rex_yform_manager_dataset
             /** @var Type $type */
             // Erstellen der Mediendatei
             $cached_media = self::getMediaCacheFile($type->getType(), $file);
-            if ($cached_media instanceof rex_managed_media) {
-                $attributes = [];
-                $attributes['devices'] = 'all';
-                if ('' !== $type->getMinWidth()) {
-                    $attributes['min_width'] = '(min-width: ' . $type->getMinWidth() . ')';
-                }
-                if ('' !== $type->getMaxWidth()) {
-                    $attributes['max_width'] = '(max-width: ' . $type->getMaxWidth() . ')';
-                }
-                $media_attr = implode(' AND ', $attributes);
-                $picture[] = '<source media="' . $media_attr . '" sizes="" type="image/' . $cached_media->getFormat() . '" data-width="' . $cached_media->getWidth() . '" data-height="' . $cached_media->getHeight() . '" srcset="' . Media::getFrontendUrl($cached_media, $type->getType(), $file) . '">';
+            $attributes = [];
+            $attributes['devices'] = 'all';
+            if ('' !== $type->getMinWidth()) {
+                $attributes['min_width'] = '(min-width: ' . $type->getMinWidth() . ')';
             }
+            if ('' !== $type->getMaxWidth()) {
+                $attributes['max_width'] = '(max-width: ' . $type->getMaxWidth() . ')';
+            }
+            $media_attr = implode(' AND ', $attributes);
+            $picture[] = '<source media="' . $media_attr . '" sizes="" type="image/' . $cached_media->getFormat() . '" data-width="' . $cached_media->getWidth() . '" data-height="' . $cached_media->getHeight() . '" srcset="' . Media::getFrontendUrl($cached_media, $type->getType(), true) . '">';
         }
 
         $cached_media = self::getMediaCacheFile($group->getFallback(), $file);
 
-        if ($cached_media instanceof rex_managed_media) {
-            $picture[] = '<img ' . implode(' ', $media->getAttributes()) . ' class="' . $media->getClass() . '" type="image/' . $cached_media->getFormat() . '" src="' . Media::getFrontendUrl($cached_media, $group->getFallback(), true) . '" width="' . $cached_media->getWidth() . '" height="' . $cached_media->getHeight() . '" alt="' . $media->getTitle() . '" />';
-        }
+        $picture[] = '<img ' . implode(' ', $media->getAttributes()) . ' class="' . $media->getClass() . '" type="image/' . $cached_media->getFormat() . '" src="' . Media::getFrontendUrl($cached_media, $group->getFallback(), true) . '" width="' . $cached_media->getWidth() . '" height="' . $cached_media->getHeight() . '" alt="' . $media->getTitle() . '" />';
+
 
         $picture[] = '</picture>';
         return implode('', $picture);
 
     }
 
-    private function getSrcset(Media $media_plus): string
+    private function getSrcset(Media $media_plus, string $group = ''): string
     {
-        if ($media_plus instanceof Media) {
-            $types = $this->getTypes();
-            $srcset = [];
-            foreach ($types as $type) {
-                /** @var Type $type */
-                $srcset[] = Media::getFrontendUrl($media_plus, $type->getType()) . ' ' . $type->getMinWidth();
-            }
-
-            return implode(',', $srcset);
+        $types = self::getTypes($group);
+        if($types === null) {
+            /** TODO: Log this case */
+            return '';
         }
+        $srcset = [];
+        foreach ($types as $type) {
+            /** @var Type $type */
+            $srcset[] = Media::getFrontendUrl($media_plus, $type->getType()) . ' ' . $type->getMinWidth();
+        }
+
+        return implode(',', $srcset);
+
     }
 
     /**
@@ -111,8 +115,11 @@ class TypeGroup extends rex_yform_manager_dataset
      */
     public function getImg(string $file, string $type = ''): string
     {
-        $media_plus = Media::get($file);
-        return '<img srcset="' . $this->getSrcset($media_plus) . '" src="' . Media::getFrontendUrl($media_plus, $type, true) . '" width="' . $media_plus->getWidth() . '" height="' . $media_plus->getHeight() . '" />';
+        $media = Media::get($file);
+        if($media !== null) {
+            return '<img srcset="' . $this->getSrcset($media) . '" src="' . Media::getFrontendUrl($media, $type, true) . '" width="' . $media->getWidth() . '" height="' . $media->getHeight() . '" />';
+        }
+        return '<!-- file "'.$file.'" does not exist -->';
     }
 
     /**
@@ -132,7 +139,8 @@ class TypeGroup extends rex_yform_manager_dataset
     {
         $media = Media::get($file);
 
-        if (!$media) {
+        if ($media === null) {
+            /* TODO: Log this case */
             return '';
         }
 
@@ -142,22 +150,26 @@ class TypeGroup extends rex_yform_manager_dataset
 
         $types = self::getTypes($groupname);
         $querys = [];
+        if($types === null) {
+            /* TODO: Log this case */
+            return '';
+        }
         foreach ($types as $type) {
-            /** @var media_manager_type_meta $type */
+            /** @var Type $type */
             // Erstellen der Mediendatei
             $cached_media = rex_media_manager::create($type->getType(), $file)->getMedia();
-            if ($cached_media instanceof rex_managed_media) {
-                $attributes = [];
-                $attributes['devices'] = 'all';
-                if ('' !== $type->getMinWidth()) {
-                    $attributes['min_width'] = '(min-width: ' . $type->getMinWidth() . ')';
-                }
-                if ('' !== $type->getMaxWidth()) {
-                    $attributes['max_width'] = '(max-width: ' . $type->getMaxWidth() . ')';
-                }
-                $media_attr = implode(' and ', $attributes);
-                $querys[] = '@media ' . $media_attr . ' { ' . $selector . '{ background-image: url(' . Media::getFrontendUrl($cached_media, $type->getType(), $file) . ');} }';
+                
+            $attributes = [];
+            $attributes['devices'] = 'all';
+            if ('' !== $type->getMinWidth()) {
+                $attributes['min_width'] = '(min-width: ' . $type->getMinWidth() . ')';
             }
+            if ('' !== $type->getMaxWidth()) {
+                $attributes['max_width'] = '(max-width: ' . $type->getMaxWidth() . ')';
+            }
+            $media_attr = implode(' and ', $attributes);
+            $querys[] = '@media ' . $media_attr . ' { ' . $selector . '{ background-image: url(' . Media::getFrontendUrl($cached_media, $type->getType(), true) . ');} }';
+
         }
 
         $fragment = new rex_fragment();
