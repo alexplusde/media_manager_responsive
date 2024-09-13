@@ -1,10 +1,10 @@
 package: media_manager_responsive
-version: '1.1.7'
+version: '2.0.0-dev-2024-09-14'
 author: 'Alexander Walther'
 supportpage: https://www.alexplus.de
 
 requires:
-    redaxo: ^5.13
+    redaxo: ^5.17
     mediapool: ^2.11
     media_manager: ^2.12
     yform: ^4
