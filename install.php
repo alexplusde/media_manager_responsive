@@ -2,6 +2,8 @@
 
 $addon = rex_addon::get('media_manager_responsive');
 
+include_once(__DIR__ . '/install/update_schema.php');
+
 if (rex_addon::get('yform')->isAvailable()) {
     $file = rex_file::get(rex_path::addon($addon->getName(), 'install/media_manager_responsive.tableset.json'));
     if($file !== null) {
