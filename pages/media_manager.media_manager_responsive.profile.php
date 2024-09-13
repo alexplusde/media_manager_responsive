@@ -9,7 +9,7 @@ rex_extension::register(
     static function (rex_extension_point $ep) {
         $yform = $ep->getParam('yform');
         /** rex_yform_manager $yform */
-        $table =  $yform->getTable();
+        $table = $yform->getTable();
         /** @var rex_yform_manager_table $table */
         if ($table->getTableName() === $ep->getParam('table_name')) {
             return '';
@@ -23,7 +23,6 @@ $yform = $addon->getProperty('yform', []);
 /** @var rex_yform_manager $yform */
 $yform = $yform[rex_be_controller::getCurrentPage()] ?? [];
 
-$_REQUEST['table_name'] = $table_name; // @phpstan-ignore-line
-
+$_REQUEST['table_name'] = $table_name; /** @phpstan-ignore-line */
 
 include rex_path::plugin('yform', 'manager', 'pages/data_edit.php');

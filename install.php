@@ -4,12 +4,11 @@ $addon = rex_addon::get('media_manager_responsive');
 
 if (rex_addon::get('yform')->isAvailable()) {
     $file = rex_file::get(rex_path::addon($addon->getName(), 'install/media_manager_responsive.tableset.json'));
-    if($file !== null) {
+    if (null !== $file) {
         rex_yform_manager_table_api::importTablesets($file);
         rex_yform_manager_table::deleteCache();
     }
 }
-
 
 /*
 $mediaTypes = json_decode(rex_file::get(rex_path::addon("media_plus")."install/rex_media_manager_type.json"), 1);
