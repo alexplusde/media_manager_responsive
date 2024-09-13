@@ -8,7 +8,7 @@ rex_extension::register(
     'YFORM_MANAGER_DATA_PAGE_HEADER',
     static function (rex_extension_point $ep) {
         $yform = $ep->getParam('yform');
-        $table =  $yform->table;
+        $table = $yform->table;
         /** @var rex_yform_manager_table $table */
         if ($table->getTableName() === $ep->getParam('table_name')) {
             return '';
