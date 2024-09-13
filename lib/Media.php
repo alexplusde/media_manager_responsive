@@ -101,7 +101,7 @@ class Media extends rex_media
         $fragment->setVar('author', $this->getValue('med_copyright') ?? '');
         $fragment->setVar('location', $this->getValue('med_location') ?? '');
         $fragment->setVar('name', $this->getValue('name'));
-        $fragment->setVar('datePublished', date('Y-m-d', $this->getUpdatedate()));
+        $fragment->setVar('datePublished', date('Y-m-d', $this->getUpdateDate()));
 
         return html_entity_decode($fragment->parse('media_manager_responsive/structured_data.php'));
     }
@@ -119,15 +119,12 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param null|string $profile 
+     * @param string $profile 
      * @return string 
      */
-    public function getImg(?string $profile = null): string
+    public function getImg(string $profile = ''): string
     {
-        if ($profile) {
-            return '<img ' . implode(' ', $this->getAttributes()) . ' class="' . $this->getClass() . '" src="' . self::getFrontendUrl($this, $profile) . '" alt="' . $this->getTitle() . '" width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" />';
-        }
-        return '<img ' . implode(' ', $this->getAttributes()) . ' class="' . $this->getClass() . '" src="' . self::getFrontendUrl($this) . '" alt="' . $this->getTitle() . '" width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" />';
+        return '<img ' . implode(' ', $this->getAttributes()) . ' class="' . $this->getClass() . '" src="' . self::getFrontendUrl($this, $profile) . '" alt="' . $this->getTitle() . '" width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" />';
     }
 
     /**
@@ -137,7 +134,7 @@ class Media extends rex_media
      */
     public function getImgBase64(bool $only_data = false): string
     {
-        $data = 'data:image/' . $this->getType() . ';base64,' . base64_encode(\rex_file::get(rex_path::media($this->name)));
+        $data = 'data:image/' . $this->getType() . ';base64,' . base64_encode(\rex_file::get(rex_path::media($this->name)) ?? '');
         if ($only_data) {
             return $data;
         }
@@ -190,7 +187,7 @@ class Media extends rex_media
         } else {
             // $filename = $media->getMediaFilename();
             // Workaround wg. https://github.com/redaxo/redaxo/issues/4519#issuecomment-1183515367
-            $path = explode(DIRECTORY_SEPARATOR, $media->getMediaPath());
+            $path = explode(DIRECTORY_SEPARATOR, $media->getMediaPath() ?? '');
             $filename = array_pop($path);
         }
 
@@ -223,21 +220,22 @@ class Media extends rex_media
         $media = rex_media::get($filename);
 
         if ($media !== null && 'image/svg+xml' === $media->getType()) {
-            $xml = simplexml_load_file(rex_path::media($filename));
-
-            $viewBox = $xml['viewBox'] ? $xml['viewBox']->__toString() : '';
-            $viewBox = preg_split('/[\s,]+/', $viewBox);
-
             $width = 0;
             $height = 0;
 
-            $width = ((int) $viewBox[2] - (int) $viewBox[0]);
-            $height = ((int) $viewBox[3] - (int) $viewBox[1]);
+            $xml = simplexml_load_file(rex_path::media($filename));
+
+            if($xml !== false && isset($xml['viewbox'])) {
+                $viewBox = preg_split('/[\s,]+/', $xml['viewBox']->__toString());
+
+                $width = ((int) $viewBox[2] - (int) $viewBox[0]);
+                $height = ((int) $viewBox[3] - (int) $viewBox[1]);
 
 
-            if ($height === 0 && $width === 0 && isset($xml['width']) && isset($xml['height'])) {
-                $width = $xml['width'];
-                $height = $xml['height'];
+                if ($height === 0 && $width === 0 && isset($xml['width']) && isset($xml['height'])) {
+                    $width = $xml['width'];
+                    $height = $xml['height'];
+                }
             }
 
             $sql = rex_sql::factory();

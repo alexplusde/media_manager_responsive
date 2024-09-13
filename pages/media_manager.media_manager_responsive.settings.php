@@ -46,6 +46,7 @@ $package = rex_install_packages::getUpdatePackages();
 if (isset($packages['media_manager_responsive'])) {
     $current_version = rex_addon::get('media_manager_responsive')->getProperty('version');
     if (isset($package['files'])) {
+        /* FIXME: Das kann so gar nicht funktionieren */
         $latest_version = array_pop($updates)['version'];
     }
     if (isset($latest_version) && rex_version::compare($latest_version, (string) $current_version, '>')) {
