@@ -1,11 +1,11 @@
-# Media Manager Responsive für REDAXO 5
+# Media Manager Responsive 2 für REDAXO 5
 
 ![image](https://user-images.githubusercontent.com/3855487/162645318-e2c50a9f-6ea3-4a6c-8633-3603f9a2e4e5.png)
 
 
 REDAXO-Addon mit nützlichen Methoden im Umgang mit dem Picture-Element, responsiven Bilder, SVG-Ausgabe, u.v.m.
 
-1. Der erste Schritt: Einfach `rex_media::get()` durch `rex_media_plus::get()` in deinem Code ersetzen und los geht's.
+1. Der erste Schritt: Einfach `rex_media::get()` durch `Alexplusde\MediaManagerResponsive\Media::get()` in deinem Code ersetzen und los geht's.
 2. Der zweite Schritt: Eigene Responsive-Gruppen anlegen und Medientypen erstellen / zuordnen.
 3. Auf Wunsch: Das Addon Cache-Warmup drüberlaufen lassen. Es werden nur tatsächlich verwendete Bildprofil-Mediendatei-Kombinationen generiert. 
 
@@ -21,7 +21,7 @@ REDAXO-Addon mit nützlichen Methoden im Umgang mit dem Picture-Element, respons
 * Kompatibel zu `FriendsOfRedaxo\minify_images` und `FriendsOfRedaxo\focuspoint`
 * Optimiert für https://github.com/FriendsOfREDAXO/cache_warmup
 
-## `rex_media_plus` verwenden
+## `Alexplusde\MediaManagerResponsive\Media` verwenden
 
 Die Klasse `rex_media_plus` ist eine Child-Klasse und erbt alle Methoden von `rex_media` bis auf nachfolgende Ergänzungen und Ersetzungen.
 
