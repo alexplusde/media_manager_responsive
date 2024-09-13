@@ -5,7 +5,6 @@ namespace Alexplusde\MediaManagerResponsive;
 use rex_media;
 use rex_fragment;
 use rex_sql;
-use rex_exception;
 use rex_managed_media;
 use rex_extension_point;
 use rex_url;
@@ -13,8 +12,11 @@ use rex_path;
 
 class Media extends rex_media
 {
+    /** @api */
     public string $loading = 'auto';
+    /** @api */
     public string $class = '';
+    /** @api */
     public array $plus_attributes = [];
 
     public function __construct()
@@ -88,12 +90,11 @@ class Media extends rex_media
     /**
      * @api
      * @return string 
-     * @throws InvalidArgumentException 
      */
     public function getStructuredData(): string
     {
         $fragment = new rex_fragment();
-        $fragment->setVar('title', $this->getTitle() ?? '');
+        $fragment->setVar('title', $this->getTitle());
         $fragment->setVar('description', $this->getValue('med_description'));
         $fragment->setVar('author', $this->getValue('med_copyright') ?? '');
         $fragment->setVar('location', $this->getValue('med_location') ?? '');
@@ -108,10 +109,6 @@ class Media extends rex_media
      * @param string $group_name 
      * @param string $selector 
      * @return string 
-     * @throws InvalidArgumentException 
-     * @throws RuntimeException 
-     * @throws rex_sql_exception 
-     * @throws rex_exception 
      */
     public function getBackgroundStyles(string $group_name, string $selector)
     {
@@ -135,7 +132,6 @@ class Media extends rex_media
      * @api
      * @param bool $only_data 
      * @return string 
-     * @throws InvalidArgumentException 
      */
     public function getImgBase64(bool $only_data = false): string
     {
@@ -149,7 +145,6 @@ class Media extends rex_media
     /**
      * @api
      * @return string 
-     * @throws InvalidArgumentException 
      */
     public function getSvg(): string
     {
@@ -163,9 +158,6 @@ class Media extends rex_media
      * @api
      * @param string $groupname 
      * @return string 
-     * @throws RuntimeException 
-     * @throws rex_sql_exception 
-     * @throws rex_exception 
      */
     public function getPicture(string $groupname): string
     {
@@ -221,7 +213,6 @@ class Media extends rex_media
      * @api
      * @param rex_extension_point $ep 
      * @return void 
-     * @throws rex_sql_exception 
      */
     public static function mediapool_updated_svg_viewbox(rex_extension_point $ep) :void
     {
@@ -242,13 +233,13 @@ class Media extends rex_media
             $height = (int) ((int) $viewBox[3] - (int) $viewBox[1]);
 
 
-            if (!$height && !$width && isset($xml['width']) && isset($xml['height'])) {
-                $width = $xml['width'] ? $xml['width']->__toString() : 0;
-                $height = $xml['height'] ? $xml['height']->__toString() : 0;
+            if ($height === 0 && $width === 0 && isset($xml['width']) && isset($xml['height'])) {
+                $width = $xml['width'];
+                $height = $xml['height'];
             }
 
             $sql = rex_sql::factory();
-            $sql->setWhere('filename', $filename);
+            $sql->setWhere('filename =  :filename', [$filename => $filename]);
             $sql->setTable('rex_media');
             $sql->setValue('width', $width);
             $sql->setValue('height', $height);

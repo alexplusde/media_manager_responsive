@@ -23,7 +23,6 @@ class Type extends rex_yform_manager_dataset
     /**
      * @api
      * @return string 
-     * @throws rex_sql_exception 
      */
     public function getType(): string
     {
@@ -33,7 +32,6 @@ class Type extends rex_yform_manager_dataset
     /**
      * @api
      * @return string 
-     * @throws rex_sql_exception 
      */
     public function getRatio(): string
     {
@@ -43,7 +41,6 @@ class Type extends rex_yform_manager_dataset
     /**
      * @api
      * @return string 
-     * @throws rex_sql_exception 
      */
     public function getMinWidth(): string
     {
@@ -53,7 +50,6 @@ class Type extends rex_yform_manager_dataset
     /**
      * @api
      * @return string 
-     * @throws rex_sql_exception 
      */
     public function getMaxWidth(): string
     {

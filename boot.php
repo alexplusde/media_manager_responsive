@@ -2,6 +2,7 @@
 
 use Alexplusde\MediaManagerResponsive\TypeGroup;
 use Alexplusde\MediaManagerResponsive\Type;
+use Alexplusde\MediaManagerResponsive\Media;
 
 if (rex_addon::get('yform')->isAvailable()) {
     rex_yform_manager_dataset::setModelClass(
@@ -15,7 +16,7 @@ if (rex_addon::get('yform')->isAvailable()) {
 }
 
 // rex_extension::register('MEDIA_FORM_EDIT', array('rex_media_plus', 'mediapool_edit_svg_viewbox'));
-rex_extension::register('MEDIA_UPDATED', ['rex_media_plus', 'mediapool_updated_svg_viewbox']);
+rex_extension::register('MEDIA_FORM_ADD', Media::mediapool_updated_svg_viewbox(...));
 // rex_extension::register('MEDIA_FORM_ADD', array('rex_media_plus', 'mediapool_add_svg_viewbox'));
 
 if (rex_addon::get('cache_warmup')->isAvailable()) {
