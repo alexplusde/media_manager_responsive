@@ -31,7 +31,7 @@ $fragment = new rex_fragment();
 $fragment->setVar('class', 'info', false);
 $fragment->setVar('title', $addon->i18n('media_manager_responsive_donate'), false);
 $fragment->setVar('body', '<p>' . $addon->i18n('media_manager_responsive_info_donate') . '</p>' . $anchor, false);
-echo rex_config::get('alexplusde', 'donated') === 1 ? $fragment->parse('core/page/section.php') : '';
+echo 1 === rex_config::get('alexplusde', 'donated') ? $fragment->parse('core/page/section.php') : '';
 
 if (rex_addon::get('speed_up')->isAvailable()) {
     $anchor = '<a target="_blank" href="https://github.com/alexplusde/speed_up/">' . $addon->i18n('media_manager_responsive_info_media_manager_responsive_install') . '</a>';

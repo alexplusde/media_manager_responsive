@@ -2,13 +2,17 @@
 
 namespace Alexplusde\MediaManagerResponsive;
 
-use rex_media;
-use rex_fragment;
-use rex_sql;
-use rex_managed_media;
 use rex_extension_point;
-use rex_url;
+use rex_file;
+use rex_fragment;
+use rex_managed_media;
+use rex_media;
 use rex_path;
+use rex_sql;
+use rex_url;
+
+use const DIRECTORY_SEPARATOR;
+use const PHP_EOL;
 
 class Media extends rex_media
 {
@@ -17,7 +21,7 @@ class Media extends rex_media
     /** @api */
     public string $class = '';
     /**
-     * @var array<string> 
+     * @var array<string>
      * @api */
     public array $plus_attributes = [];
 
@@ -28,7 +32,6 @@ class Media extends rex_media
 
     /**
      * @api
-     * @return string 
      */
     public function getLoading(): string
     {
@@ -37,8 +40,6 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param string $loading 
-     * @return Media 
      */
     public function setLoading(string $loading): self
     {
@@ -49,8 +50,6 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param string $class 
-     * @return Media 
      */
     public function setClass(string $class): self
     {
@@ -61,7 +60,6 @@ class Media extends rex_media
 
     /**
      * @api
-     * @return string 
      */
     public function getClass(): string
     {
@@ -70,8 +68,7 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param array<string> $attributes 
-     * @return Media 
+     * @param array<string> $attributes
      */
     public function setAttributes(array $attributes): self
     {
@@ -91,7 +88,6 @@ class Media extends rex_media
 
     /**
      * @api
-     * @return string 
      */
     public function getStructuredData(): string
     {
@@ -108,9 +104,7 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param string $group_name 
-     * @param string $selector 
-     * @return string 
+     * @return string
      */
     public function getBackgroundStyles(string $group_name, string $selector)
     {
@@ -119,8 +113,6 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param string $profile 
-     * @return string 
      */
     public function getImg(string $profile = ''): string
     {
@@ -129,12 +121,10 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param bool $only_data 
-     * @return string 
      */
     public function getImgBase64(bool $only_data = false): string
     {
-        $data = 'data:image/' . $this->getType() . ';base64,' . base64_encode(\rex_file::get(rex_path::media($this->name)) ?? '');
+        $data = 'data:image/' . $this->getType() . ';base64,' . base64_encode(rex_file::get(rex_path::media($this->name)) ?? '');
         if ($only_data) {
             return $data;
         }
@@ -143,20 +133,17 @@ class Media extends rex_media
 
     /**
      * @api
-     * @return string 
      */
     public function getSvg(): string
     {
         return
         '<!-- ' . $this->name . ' -->' .
-        PHP_EOL . \rex_file::get(rex_path::media($this->name)) . PHP_EOL .
+        PHP_EOL . rex_file::get(rex_path::media($this->name)) . PHP_EOL .
         '<!-- / ' . $this->name . ' -->';
     }
 
     /**
      * @api
-     * @param string $groupname 
-     * @return string 
      */
     public function getPicture(string $groupname): string
     {
@@ -165,8 +152,6 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param string $value 
-     * @return void 
      */
     public function setTitle(string $value = ''): void
     {
@@ -175,10 +160,6 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param rex_media|Media|rex_managed_media $media 
-     * @param null|string $profile 
-     * @param bool $show_timestamp 
-     * @return string 
      */
     public static function getFrontendUrl(rex_media|self|rex_managed_media $media, ?string $profile = null, bool $show_timestamp = true): string
     {
@@ -201,7 +182,7 @@ class Media extends rex_media
             }
         }
 
-        if ($profile !== null) {
+        if (null !== $profile) {
             return rex_url::media($profile . '/' . $filename) . $timestamp;
         }
 
@@ -210,29 +191,26 @@ class Media extends rex_media
 
     /**
      * @api
-     * @param rex_extension_point $ep 
-     * @return void 
      */
-    public static function mediapool_updated_svg_viewbox(rex_extension_point $ep) :void
+    public static function mediapool_updated_svg_viewbox(rex_extension_point $ep): void
     {
         $filename = (string) $ep->getParam('filename');
 
         $media = rex_media::get($filename);
 
-        if ($media !== null && 'image/svg+xml' === $media->getType()) {
+        if (null !== $media && 'image/svg+xml' === $media->getType()) {
             $width = 0;
             $height = 0;
 
             $xml = simplexml_load_file(rex_path::media($filename));
 
-            if($xml !== false && isset($xml['viewbox'])) {
+            if (false !== $xml && isset($xml['viewbox'])) {
                 $viewBox = preg_split('/[\s,]+/', $xml['viewBox']->__toString());
 
                 $width = ((int) $viewBox[2] - (int) $viewBox[0]);
                 $height = ((int) $viewBox[3] - (int) $viewBox[1]);
 
-
-                if ($height === 0 && $width === 0 && isset($xml['width']) && isset($xml['height'])) {
+                if (0 === $height && 0 === $width && isset($xml['width']) && isset($xml['height'])) {
                     $width = $xml['width'];
                     $height = $xml['height'];
                 }

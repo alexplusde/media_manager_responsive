@@ -11,7 +11,7 @@ class rex_var_media_plus extends rex_var
 {
     protected function getOutput()
     {
-        if ($this->hasArg('file') && $this->getArg('output') !== "") {
+        if ($this->hasArg('file') && '' !== $this->getArg('output')) {
             $media = Media::get($this->getArg('file') ?? '');
             $profile = $this->getArg('profile') ?? '';
             $group = $this->getArg('group') ?? '';
