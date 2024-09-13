@@ -1,8 +1,8 @@
 <?php
 
-use Alexplusde\MediaManagerResponsive\TypeGroup;
-use Alexplusde\MediaManagerResponsive\Type;
 use Alexplusde\MediaManagerResponsive\Media;
+use Alexplusde\MediaManagerResponsive\Type;
+use Alexplusde\MediaManagerResponsive\TypeGroup;
 
 if (rex_addon::get('yform')->isAvailable()) {
     rex_yform_manager_dataset::setModelClass(

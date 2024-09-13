@@ -2,14 +2,14 @@
 
 namespace Alexplusde\MediaManagerResponsive;
 
-use rex_yform_manager_dataset;
 use rex_yform_manager_collection;
+use rex_yform_manager_dataset;
 
 class Type extends rex_yform_manager_dataset
 {
     /**
      * @api
-     * @return null|rex_yform_manager_collection<TypeGroup>
+     * @return rex_yform_manager_collection<TypeGroup>|null
      */
     public function getGroup(): ?rex_yform_manager_collection
     {
@@ -18,7 +18,6 @@ class Type extends rex_yform_manager_dataset
 
     /**
      * @api
-     * @return string 
      */
     public function getType(): string
     {
@@ -27,7 +26,6 @@ class Type extends rex_yform_manager_dataset
 
     /**
      * @api
-     * @return string 
      */
     public function getRatio(): string
     {
@@ -36,7 +34,6 @@ class Type extends rex_yform_manager_dataset
 
     /**
      * @api
-     * @return string 
      */
     public function getMinWidth(): string
     {
@@ -45,7 +42,6 @@ class Type extends rex_yform_manager_dataset
 
     /**
      * @api
-     * @return string 
      */
     public function getMaxWidth(): string
     {
