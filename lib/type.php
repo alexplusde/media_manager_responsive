@@ -1,6 +1,11 @@
 <?php
 
-class media_manager_type_meta extends rex_yform_manager_dataset
+namespace Alexplusde\MediaManagerResponsive;
+
+use rex_yform_manager_dataset;
+use rex_yform_manager_collection;
+
+class Type extends rex_yform_manager_dataset
 {
     /**
      * @api

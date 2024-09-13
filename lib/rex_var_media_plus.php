@@ -1,4 +1,9 @@
 <?php
+
+namespace Alexplusde\MediaManagerResponsive;
+
+use rex_var;
+
 /**
  *     REX_MEDIA_PLUS[file="file.jpg" output="inline" profile="small" group="header"] // Datei file.jpg aus dem Assets-Ordner.
  */
@@ -7,10 +12,10 @@ class rex_var_media_plus extends rex_var
     protected function getOutput()
     {
         if ($this->hasArg('file') && $this->getArg('output') !== "") {
-            $media_plus = rex_media_plus::get($this->getArg('file'));
+            $media_plus = Media::get($this->getArg('file'));
             $profile = $this->getArg('profile') ?? '';
             $group = $this->getArg('group') ?? '';
-            if ($media_plus instanceof rex_media_plus) {
+            if ($media_plus instanceof Media) {
                 switch ($this->getArg('output')) {
                     case 'img':
                         return self::quote($media_plus->getImg($profile));

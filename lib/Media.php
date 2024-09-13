@@ -1,6 +1,17 @@
 <?php
 
-class rex_media_plus extends rex_media
+namespace Alexplusde\MediaManagerResponsive;
+
+use rex_media;
+use rex_fragment;
+use rex_sql;
+use rex_exception;
+use rex_managed_media;
+use rex_extension_point;
+use rex_url;
+use rex_path;
+
+class Media extends rex_media
 {
     public string $loading = 'auto';
     public string $class = '';
@@ -8,14 +19,23 @@ class rex_media_plus extends rex_media
 
     public function __construct()
     {
-        $this->attributes = [];
+        $this->plus_attributes = [];
     }
 
+    /**
+     * @api
+     * @return string 
+     */
     public function getLoading(): string
     {
         return $this->loading;
     }
 
+    /**
+     * @api
+     * @param string $loading 
+     * @return Media 
+     */
     public function setLoading(string $loading): self
     {
         $this->loading = $loading;
@@ -23,6 +43,11 @@ class rex_media_plus extends rex_media
         return $this;
     }
 
+    /**
+     * @api
+     * @param string $class 
+     * @return Media 
+     */
     public function setClass(string $class): self
     {
         $this->class = $class;
@@ -30,11 +55,20 @@ class rex_media_plus extends rex_media
         return $this;
     }
 
+    /**
+     * @api
+     * @return string 
+     */
     public function getClass(): string
     {
         return $this->class;
     }
 
+    /**
+     * @api
+     * @param array $attributes 
+     * @return Media 
+     */
     public function setAttributes(array $attributes): self
     {
         $this->plus_attributes = $attributes;
@@ -42,6 +76,10 @@ class rex_media_plus extends rex_media
         return $this;
     }
 
+    /**
+     * @api
+     * @return array 
+     */
     public function getAttributes(): array
     {
         return $this->plus_attributes ?? [];
@@ -77,7 +115,7 @@ class rex_media_plus extends rex_media
      */
     public function getBackgroundStyles(string $group_name, string $selector)
     {
-        return media_manager_type_group::getBackgroundStyles($this->getFilename(), $group_name, $selector);
+        return TypeGroup::getBackgroundStyles($this->getFilename(), $group_name, $selector);
     }
 
     /**
@@ -101,7 +139,7 @@ class rex_media_plus extends rex_media
      */
     public function getImgBase64(bool $only_data = false): string
     {
-        $data = 'data:image/' . $this->getType() . ';base64,' . base64_encode(rex_file::get(rex_path::media($this->name)));
+        $data = 'data:image/' . $this->getType() . ';base64,' . base64_encode(\rex_file::get(rex_path::media($this->name)));
         if ($only_data) {
             return $data;
         }
@@ -117,7 +155,7 @@ class rex_media_plus extends rex_media
     {
         return
         '<!-- ' . $this->name . ' -->' .
-        PHP_EOL . rex_file::get(rex_path::media($this->name)) . PHP_EOL .
+        PHP_EOL . \rex_file::get(rex_path::media($this->name)) . PHP_EOL .
         '<!-- / ' . $this->name . ' -->';
     }
 
@@ -131,7 +169,7 @@ class rex_media_plus extends rex_media
      */
     public function getPicture(string $groupname): string
     {
-        return media_manager_type_group::getPicture($groupname, $this);
+        return TypeGroup::getPicture($groupname, $this);
     }
 
     /**
@@ -146,7 +184,7 @@ class rex_media_plus extends rex_media
 
     /**
      * @api
-     * @param rex_media|rex_media_plus|rex_managed_media $media 
+     * @param rex_media|Media|rex_managed_media $media 
      * @param null|string $profile 
      * @param bool $show_timestamp 
      * @return string 

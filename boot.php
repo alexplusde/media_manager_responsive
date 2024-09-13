@@ -1,13 +1,16 @@
 <?php
 
+use Alexplusde\MediaManagerResponsive\TypeGroup;
+use Alexplusde\MediaManagerResponsive\Type;
+
 if (rex_addon::get('yform')->isAvailable()) {
     rex_yform_manager_dataset::setModelClass(
         'rex_media_manager_type_group',
-        media_manager_type_group::class,
+        TypeGroup::class,
     );
     rex_yform_manager_dataset::setModelClass(
         'rex_media_manager_type_meta',
-        media_manager_type_meta::class,
+        Type::class,
     );
 }
 
