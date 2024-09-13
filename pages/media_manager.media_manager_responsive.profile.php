@@ -18,8 +18,7 @@ rex_extension::register(
 $yform = $addon->getProperty('yform', []);
 $yform = $yform[rex_be_controller::getCurrentPage()] ?? [];
 
-if ($table_name) {
-    $_REQUEST['table_name'] = $table_name;
-}
+$_REQUEST['table_name'] = $table_name; // @phpstan-ignore-line
+
 
 include rex_path::plugin('yform', 'manager', 'pages/data_edit.php');

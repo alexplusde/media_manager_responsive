@@ -14,7 +14,7 @@ $fragment = new rex_fragment();
 $fragment->setVar('class', 'info', false);
 $fragment->setVar('title', $addon->i18n('media_manager_responsive_donate'), false);
 $fragment->setVar('body', '<p>' . $addon->i18n('media_manager_responsive_info_donate') . '</p>' . $anchor, false);
-echo !rex_config::get('alexplusde', 'donated') ? $fragment->parse('core/page/section.php') : '';
+echo rex_config::get('alexplusde', 'donated', 0) === 1 ? $fragment->parse('core/page/section.php') : '';
 ?>
 	</div>
 </div>

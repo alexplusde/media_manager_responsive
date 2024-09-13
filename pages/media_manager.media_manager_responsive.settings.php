@@ -31,7 +31,7 @@ $fragment = new rex_fragment();
 $fragment->setVar('class', 'info', false);
 $fragment->setVar('title', $addon->i18n('media_manager_responsive_donate'), false);
 $fragment->setVar('body', '<p>' . $addon->i18n('media_manager_responsive_info_donate') . '</p>' . $anchor, false);
-echo !rex_config::get('alexplusde', 'donated') ? $fragment->parse('core/page/section.php') : '';
+echo rex_config::get('alexplusde', 'donated') === 1 ? $fragment->parse('core/page/section.php') : '';
 
 if (rex_addon::get('speed_up')->isAvailable()) {
     $anchor = '<a target="_blank" href="https://github.com/alexplusde/speed_up/">' . $addon->i18n('media_manager_responsive_info_media_manager_responsive_install') . '</a>';
@@ -48,7 +48,7 @@ if (isset($packages['media_manager_responsive'])) {
     if (isset($package['files'])) {
         $latest_version = array_pop($updates)['version'];
     }
-    if (rex_version::compare($latest_version, $current_version, '>')) {
+    if (isset($latest_version) && rex_version::compare($latest_version, (string) $current_version, '>')) {
         echo rex_view::info($addon->i18n('media_manager_responsive_update_available') . ' ' . $latest_version);
     }
 }

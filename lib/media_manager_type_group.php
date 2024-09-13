@@ -41,7 +41,7 @@ class media_manager_type_group extends rex_yform_manager_dataset
     {
         if ($media_plus) {
             $file = $media_plus->getFilename();
-            if ('image/svg+xml' == $media_plus->getType()) {
+            if ('image/svg+xml' === $media_plus->getType()) {
                 return $media_plus->getSvg();
             }
 
@@ -55,10 +55,10 @@ class media_manager_type_group extends rex_yform_manager_dataset
                 $cached_media = self::getMediaCacheFile($type->getType(), $file);
                 if ($cached_media instanceof rex_managed_media) {
                     $media['devices'] = 'all';
-                    if ('' != $type->getMinWidth()) {
+                    if ('' !== $type->getMinWidth()) {
                         $media['min_width'] = '(min-width: ' . $type->getMinWidth() . ')';
                     }
-                    if ('' != $type->getMaxWidth()) {
+                    if ('' !== $type->getMaxWidth()) {
                         $media['max_width'] = '(max-width: ' . $type->getMaxWidth() . ')';
                     }
                     $media_attr = implode(' AND ', $media);
@@ -91,10 +91,10 @@ class media_manager_type_group extends rex_yform_manager_dataset
         }
     }
 
-    public function getImg(string $file): string
+    public function getImg(string $file, string $type = ''): string
     {
         $media_plus = rex_media_plus::get($file);
-        return '<img srcset="' . $this->getSrcset($media_plus) . '" src="' . rex_media_plus::getFrontendUrl($managed_media, $type->getType(), $file) . '" width="' . $media_plus->getWidth() . '" height="' . $media_plus->getHeight() . '" />';
+        return '<img srcset="' . $this->getSrcset($media_plus) . '" src="' . rex_media_plus::getFrontendUrl($media_plus, $type, true) . '" width="' . $media_plus->getWidth() . '" height="' . $media_plus->getHeight() . '" />';
     }
 
     public static function getBackgroundStyles(string $file, string $groupname, string $selector, string $fragment_path = 'media_manager_responsive/background_styles.php'): string
@@ -105,7 +105,7 @@ class media_manager_type_group extends rex_yform_manager_dataset
             return '';
         }
 
-        if ('image/svg+xml' == $media_plus->getType()) {
+        if ('image/svg+xml' === $media_plus->getType()) {
             return $media_plus->getSvg();
         }
 
@@ -118,10 +118,10 @@ class media_manager_type_group extends rex_yform_manager_dataset
             $cached_media = rex_media_manager::create($type->getType(), $file)->getMedia();
             if ($cached_media instanceof rex_managed_media) {
                 $media['devices'] = 'all';
-                if ('' != $type->getMinWidth()) {
+                if ('' !== $type->getMinWidth()) {
                     $media['min_width'] = '(min-width: ' . $type->getMinWidth() . ')';
                 }
-                if ('' != $type->getMaxWidth()) {
+                if ('' !== $type->getMaxWidth()) {
                     $media['max_width'] = '(max-width: ' . $type->getMaxWidth() . ')';
                 }
                 $media_attr = implode(' and ', $media);

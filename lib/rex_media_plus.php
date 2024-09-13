@@ -47,6 +47,11 @@ class rex_media_plus extends rex_media
         return $this->plus_attributes ?? [];
     }
 
+    /**
+     * @api
+     * @return string 
+     * @throws InvalidArgumentException 
+     */
     public function getStructuredData(): string
     {
         $fragment = new rex_fragment();
@@ -60,11 +65,26 @@ class rex_media_plus extends rex_media
         return html_entity_decode($fragment->parse('media_manager_responsive/structured_data.php'));
     }
 
+    /**
+     * @api
+     * @param string $group_name 
+     * @param string $selector 
+     * @return string 
+     * @throws InvalidArgumentException 
+     * @throws RuntimeException 
+     * @throws rex_sql_exception 
+     * @throws rex_exception 
+     */
     public function getBackgroundStyles(string $group_name, string $selector)
     {
         return media_manager_type_group::getBackgroundStyles($this->getFilename(), $group_name, $selector);
     }
 
+    /**
+     * @api
+     * @param null|string $profile 
+     * @return string 
+     */
     public function getImg(?string $profile = null): string
     {
         if ($profile) {
@@ -73,6 +93,12 @@ class rex_media_plus extends rex_media
         return '<img ' . implode(' ', $this->getAttributes()) . ' class="' . $this->getClass() . '" src="' . self::getFrontendUrl($this) . '" alt="' . $this->getTitle() . '" width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" />';
     }
 
+    /**
+     * @api
+     * @param bool $only_data 
+     * @return string 
+     * @throws InvalidArgumentException 
+     */
     public function getImgBase64(bool $only_data = false): string
     {
         $data = 'data:image/' . $this->getType() . ';base64,' . base64_encode(rex_file::get(rex_path::media($this->name)));
@@ -82,6 +108,11 @@ class rex_media_plus extends rex_media
         return '<img ' . implode(' ', $this->getAttributes()) . ' class="' . $this->getClass() . '" src="' . $data . '" alt="' . $this->getTitle() . '" width="' . $this->getWidth() . '" height="' . $this->getHeight() . '" />';
     }
 
+    /**
+     * @api
+     * @return string 
+     * @throws InvalidArgumentException 
+     */
     public function getSvg(): string
     {
         return
@@ -90,16 +121,36 @@ class rex_media_plus extends rex_media
         '<!-- / ' . $this->name . ' -->';
     }
 
+    /**
+     * @api
+     * @param string $groupname 
+     * @return string 
+     * @throws RuntimeException 
+     * @throws rex_sql_exception 
+     * @throws rex_exception 
+     */
     public function getPicture(string $groupname): string
     {
         return media_manager_type_group::getPicture($groupname, $this);
     }
 
+    /**
+     * @api
+     * @param string $value 
+     * @return void 
+     */
     public function setTitle(string $value = ''): void
     {
         $this->title = $value;
     }
 
+    /**
+     * @api
+     * @param rex_media|rex_media_plus|rex_managed_media $media 
+     * @param null|string $profile 
+     * @param bool $show_timestamp 
+     * @return string 
+     */
     public static function getFrontendUrl(rex_media|self|rex_managed_media $media, ?string $profile = null, bool $show_timestamp = true): string
     {
         if ($media instanceof rex_media || $media instanceof self) {
@@ -121,34 +172,45 @@ class rex_media_plus extends rex_media
             }
         }
 
-        if ($profile) {
+        if ($profile !== null) {
             return rex_url::media($profile . '/' . $filename) . $timestamp;
         }
 
         return rex_url::media($filename) . $timestamp;
     }
 
-    public static function mediapool_updated_svg_viewbox(rex_extension_point $ep)
+    /**
+     * @api
+     * @param rex_extension_point $ep 
+     * @return void 
+     * @throws rex_sql_exception 
+     */
+    public static function mediapool_updated_svg_viewbox(rex_extension_point $ep) :void
     {
-        $filename = $ep->getParam('filename');
+        $filename = (string) $ep->getParam('filename');
 
         $media = rex_media::get($filename);
 
-        if ('image/svg+xml' == $media->getType()) {
+        if ($media !== null && 'image/svg+xml' === $media->getType()) {
             $xml = simplexml_load_file(rex_path::media($filename));
 
             $viewBox = $xml['viewBox'] ? $xml['viewBox']->__toString() : 0;
             $viewBox = preg_split('/[\s,]+/', $viewBox);
-            $width = (float) ((int) $viewBox[2] - (int) $viewBox[0] ?? 0);
-            $height = (float) ((int) $viewBox[3] - (int) $viewBox[1] ?? 0);
 
-            if (!$height && !$width) {
+            $width = 0;
+            $height = 0;
+
+            $width = (int) ((int) $viewBox[2] - (int) $viewBox[0]);
+            $height = (int) ((int) $viewBox[3] - (int) $viewBox[1]);
+
+
+            if (!$height && !$width && isset($xml['width']) && isset($xml['height'])) {
                 $width = $xml['width'] ? $xml['width']->__toString() : 0;
                 $height = $xml['height'] ? $xml['height']->__toString() : 0;
             }
 
             $sql = rex_sql::factory();
-            $sql->setWhere('filename="' . $filename . '"');
+            $sql->setWhere('filename', $filename);
             $sql->setTable('rex_media');
             $sql->setValue('width', $width);
             $sql->setValue('height', $height);

@@ -6,10 +6,10 @@ class rex_var_media_plus extends rex_var
 {
     protected function getOutput()
     {
-        if ($this->hasArg('file') && $this->getArg('output')) {
+        if ($this->hasArg('file') && $this->getArg('output') !== "") {
             $media_plus = rex_media_plus::get($this->getArg('file'));
-            $profile = $this->getArg('profile') ?? null;
-            $group = $this->getArg('group') ?? null;
+            $profile = $this->getArg('profile') ?? '';
+            $group = $this->getArg('group') ?? '';
             if ($media_plus instanceof rex_media_plus) {
                 switch ($this->getArg('output')) {
                     case 'img':
@@ -23,7 +23,7 @@ class rex_var_media_plus extends rex_var
                     case 'data-base64':
                         return self::quote($media_plus->getImgBase64(true));
                     case 'svg':
-                        return self::quote($media_plus->getSvg($profile));
+                        return self::quote($media_plus->getSvg());
                     case 'background':
                         return self::quote($media_plus->getBackgroundStyles($group, ''));
                     default:

@@ -1,6 +1,6 @@
 <?php
 
-if (rex_addon::get('yform') && rex_addon::get('yform')->isAvailable()) {
+if (rex_addon::get('yform')->isAvailable()) {
     rex_yform_manager_dataset::setModelClass(
         'rex_media_manager_type_group',
         media_manager_type_group::class,
@@ -15,8 +15,8 @@ if (rex_addon::get('yform') && rex_addon::get('yform')->isAvailable()) {
 rex_extension::register('MEDIA_UPDATED', ['rex_media_plus', 'mediapool_updated_svg_viewbox']);
 // rex_extension::register('MEDIA_FORM_ADD', array('rex_media_plus', 'mediapool_add_svg_viewbox'));
 
-if (rex_addon::get('cache_warmup') && rex_addon::get('cache_warmup')->isAvailable()) {
-    if ('enhanced' == rex_config::get('media_manager_responsive', 'cache_warmup')) {
+if (rex_addon::get('cache_warmup')->isAvailable()) {
+    if ('enhanced' === rex_config::get('media_manager_responsive', 'cache_warmup')) {
         rex_extension::register('PACKAGES_INCLUDED', static function () {
             rex_addon::get('cache_warmup')->setConfig('chunkSizePages', 1);
         });
