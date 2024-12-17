@@ -1,10 +1,10 @@
 package: media_manager_responsive
-version: '2.0.0-dev-2024-09-14'
+version: '2.0.0-dev-2024-12-17'
 author: 'Alexander Walther'
 supportpage: https://www.alexplus.de
 
 requires:
-    redaxo: ^5.17
+    redaxo: ^5.18
     mediapool: ^2.11
     media_manager: ^2.12
     yform: ^4
@@ -29,6 +29,7 @@ pages:
 
 default_config:
     cache_warmup: "enhanced"
+    auto_inject_type: "default"
 
 installer_ignore:
   - composer.json
