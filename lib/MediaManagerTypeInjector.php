@@ -9,7 +9,6 @@ class MediaManagerTypeInjector
 
     public static function injectType(string $html, string $type = 'default'): string
     {
-       
         $dom = new DOMDocument();
         libxml_use_internal_errors(true);
         $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -18,7 +17,7 @@ class MediaManagerTypeInjector
         $xpath = new DOMXPath($dom);
         $images = $xpath->query('//img[not(@srcset) and not(@width) and not(@height) and not(ancestor::picture) and not(ancestor::figure)]');
 
-        if ($images === false) {
+        if (false === $images) {
             throw new RuntimeException('XPath-Abfrage fehlgeschlagen');
         }
 
@@ -27,31 +26,30 @@ class MediaManagerTypeInjector
             if (empty($src)) {
                 continue;
             }
-            
+
             $urlParts = parse_url($src);
-            if ($urlParts === false) {
+            if (false === $urlParts) {
                 continue;
             }
-            
+
             $pathToCheck = $urlParts['path'] ?? $src;
-            
-            if (strpos($pathToCheck, '/media/') === 0 && !preg_match('#^/media/[^/]+/#', $pathToCheck)) {
+
+            if (str_starts_with($pathToCheck, '/media/') && !preg_match('#^/media/[^/]+/#', $pathToCheck)) {
                 // Sammle alle Attribute
                 $imgAttributes = [];
                 $media = null;
                 foreach ($img->attributes as $attribute) {
                     $imgAttributes[$attribute->name] = $attribute->value;
-                    if ($attribute->name == 'src') {
+                    if ('src' == $attribute->name) {
                         // Dateiname ohne Pfad
                         $filename = basename($attribute->value);
                         $media = rex_media_plus::get($filename);
                     }
                 }
 
-                if ($media === null) {
+                if (null === $media) {
                     continue;
                 }
-
 
                 $newImageString = $media->getImgAsAttributesArray($type);
                 $imgAttributes = array_merge($imgAttributes, $newImageString);
@@ -70,13 +68,13 @@ class MediaManagerTypeInjector
                     // Relativer Pfad
                     $newSrc = self::addTypeToPath($pathToCheck, $type);
                 }
-                
+
                 $imgAttributes['src'] = $newSrc;
 
                 foreach ($imgAttributes as $name => $value) {
                     $attributes = $img->attributes;
                     /** @var DOMNamedNodeMap $attributes */
-                    if ($attributes->getNamedItem($name) === null) {
+                    if (null === $attributes->getNamedItem($name)) {
                         $newAttribute = $dom->createAttribute($name);
                         $newAttribute->value = $value;
                         $img->appendChild($newAttribute);
@@ -87,7 +85,6 @@ class MediaManagerTypeInjector
 
                 $img->attributes->getNamedItem('src')->nodeValue = $newSrc;
             }
-            
         }
 
         return $dom->saveHTML();

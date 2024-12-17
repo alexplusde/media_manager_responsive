@@ -7,8 +7,10 @@ use rex_file;
 use rex_fragment;
 use rex_managed_media;
 use rex_media;
+use rex_media_manager;
 use rex_path;
 use rex_sql;
+use rex_string;
 use rex_url;
 
 use const DIRECTORY_SEPARATOR;
@@ -117,21 +119,20 @@ class Media extends rex_media
     public function getImg(string $type = ''): string
     {
         $img = $this->getImgAsAttributesArray($type);
-        $attributes = \rex_string::buildAttributes($img);
-        return '<img '. $attributes .' />';
+        $attributes = rex_string::buildAttributes($img);
+        return '<img ' . $attributes . ' />';
     }
 
     /**
      * @api
      */
-    
-    public function getImgAsAttributesArray(string $type = '') :array
+    public function getImgAsAttributesArray(string $type = ''): array
     {
         $img = $this->getAttributes();
         $img['src'] = self::getFrontendUrl($this, $type);
         $managed_media = $this->getMediaCacheFile($type);
- 
-        if ($type !== '' & $managed_media instanceof rex_managed_media) {
+
+        if ('' !== $type & $managed_media instanceof rex_managed_media) {
             $img['width'] = $managed_media->getWidth();
             $img['height'] = $managed_media->getHeight();
         } else {
@@ -141,7 +142,7 @@ class Media extends rex_media
         $img['alt'] = $this->getTitle();
         $img['class'] = $this->getClass();
         $img['loading'] = $this->getLoading();
- 
+
         return $img;
     }
 
@@ -151,7 +152,7 @@ class Media extends rex_media
     public function getMediaCacheFile(string $type): ?rex_managed_media
     {
         $file = $this->getFilename();
-        return \rex_media_manager::create($type, $file)->getMedia();
+        return rex_media_manager::create($type, $file)->getMedia();
     }
 
     /**
