@@ -2,28 +2,28 @@
 
 ![image](https://user-images.githubusercontent.com/3855487/162645318-e2c50a9f-6ea3-4a6c-8633-3603f9a2e4e5.png)
 
-
 REDAXO-Addon mit nützlichen Methoden im Umgang mit dem Picture-Element, responsiven Bilder, SVG-Ausgabe, u.v.m.
 
 1. Der erste Schritt: Einfach `rex_media::get()` durch `Alexplusde\MediaManagerResponsive\Media::get()` in deinem Code ersetzen und los geht's.
 2. Der zweite Schritt: Eigene Responsive-Gruppen anlegen und Medientypen erstellen / zuordnen.
-3. Auf Wunsch: Das Addon Cache-Warmup drüberlaufen lassen. Es werden nur tatsächlich verwendete Bildprofil-Mediendatei-Kombinationen generiert. 
+3. Auf Wunsch: Das Addon Cache-Warmup drüberlaufen lassen. Es werden nur tatsächlich verwendete Bildprofil-Mediendatei-Kombinationen generiert.
 
 ## Features
 
 * Vereinfachte Ausgabe von Picture-Elementen und Bildern mit srcset-Attributen
-* Direkte Ausgabe von SVGs ohne Image-Tag, z.B. für Logos und Icons 
-* Google PageSpeed-, Ladezeit und Benutzererlebnis-Optimierungen 
+* Direkte Ausgabe von SVGs ohne Image-Tag, z.B. für Logos und Icons
+* Google PageSpeed-, Ladezeit und Benutzererlebnis-Optimierungen
   * Automatisches hinzufügen von Timestamps an die URL eines Mediums, um exzessives Caching aktivieren zu können
   * Vollständige Ausgabe der Meta-Informationen am Image- oder Picture-Element: Korrekte Höhe und Breite von Bildern werden als `width="XXX" height="XXX"` ausgegeben.
-  * Cachebuster-URLs für Medien 
+  * Cachebuster-URLs für Medien
 * Optimiert für Google Structured Data - Meta-Informationen für die Google-Suchmaschine.
 * Kompatibel zu `FriendsOfRedaxo\minify_images` und `FriendsOfRedaxo\focuspoint`
-* Optimiert für https://github.com/FriendsOfREDAXO/cache_warmup
+* Optimiert für <https://github.com/FriendsOfREDAXO/cache_warmup>
+* * NEU mit V2: Injector, der Media Manager Types auch in WYSIWYG-Editoren zur Laufzeit injiziert
 
 ## `Alexplusde\MediaManagerResponsive\Media` verwenden
 
-Die Klasse `rex_media_plus` ist eine Child-Klasse und erbt alle Methoden von `rex_media` bis auf nachfolgende Ergänzungen und Ersetzungen.
+Die Klasse `Media` ist eine Child-Klasse und erbt alle Methoden von `rex_media` bis auf nachfolgende Ergänzungen und Ersetzungen.
 
 ### `getFrontendUrl()`
 
@@ -66,15 +66,29 @@ REX_MEDIA_PLUS[file="file.jpg" output="background" group="header"]
 ### Beispiele mit PHP
 
 ```php
-echo rex_media_plus::get("beispielbild.jpg")->getImg($profile);
-echo rex_media_plus::get("beispielbild.jpg")->setClass("img-fluid")->getImg($profile);
-echo rex_media_plus::get("beispielbild.jpg")->getBase64();
-echo rex_media_plus::get("beispielbild.jpg")->getPicture($group);
-echo rex_media_plus::get("beispielbild.jpg")->getBackgroundStyles($group);
-```
-## Medien Manager Responsive verwenden
+use Alexplusde\MediaManagerResponsive\Media;
 
-Wird erläutert. 
+echo Media::get("beispielbild.jpg")->getImg($type);
+echo Media::get("beispielbild.jpg")->setClass("img-fluid")->getImg($type);
+echo Media::get("beispielbild.jpg")->getBase64();
+echo Media::get("beispielbild.jpg")->getPicture($group);
+echo Media::get("beispielbild.jpg")->getBackgroundStyles($group);
+```
+
+## Einstellungen
+
+Neu in Version 2: Media Manager Responsive kann nun auch im WYSIWYG-Editor verwendet werden. Dazu muss ein Standard-Media-Manager-Typ in den Einstellungen von Media Manager Responsive ausgewählt werden.
+
+Anschließend wird zur Laufzeit der Media Manager Typ in den WYSIWYG-Editor injiziert, inklusive korrekter Höhen- und Breitenangaben des gecachten Bildes.
+
+```html
+<!-- Vorher -->
+<img src="/media/mein-bild.jpg" alt="Bildbeschreibung" />
+<!-- Nachher -->
+<img src="/media/gewaehltes-profil/mein-bild.jpg" alt="Bildbeschreibung" width="1600" height="900" load="auto" />
+```
+
+## Medien Manager Responsive verwenden
 
 ### Beispiel-Medientypen-Liste
 
@@ -82,7 +96,7 @@ Wird erläutert.
 
 ### Beispiel Responsive-Profil
 
-> Hinweis: Der Screenshot zeigt die Reihenfolge gerade verkehrt herum zu dem, wie es sein sollte. Eine automatische Sortierung ist nicht möglich, da es verschiedene Möglichkeiten und Stile gibt, die Profile zu definieren. Prüfe die richtige Lade-Reihenfolge von Dateiformat (type) und Medium (media) in Abhängigkeit der gewählten Einstellungen in der Broser-Entwicklerkonsole. 
+> Hinweis: Der Screenshot zeigt die Reihenfolge gerade verkehrt herum zu dem, wie es sein sollte. Eine automatische Sortierung ist nicht möglich, da es verschiedene Möglichkeiten und Stile gibt, die Profile zu definieren. Prüfe die richtige Lade-Reihenfolge von Dateiformat (type) und Medium (media) in Abhängigkeit der gewählten Einstellungen in der Broser-Entwicklerkonsole.
 
 ![image](https://user-images.githubusercontent.com/3855487/162643004-cc5614c2-e043-4a9b-a118-231853608b53.png)
 
@@ -142,7 +156,7 @@ Wird erläutert.
 
 ### Wie verbessert dieses Addon meinen PageSpeed?
 
-Richtig eingesetzt durch die Kombination von 3 Features, die sowohl von Google PageSpeed berücksichtigt werden, als auch das Nutzererlebenis für die Besucher verbessern: 
+Richtig eingesetzt durch die Kombination von 3 Features, die sowohl von Google PageSpeed berücksichtigt werden, als auch das Nutzererlebenis für die Besucher verbessern:
 
 1. Durch die parallele Nutzung verschiedener Dateiformate (z.B. WEBP+JPG) und durch Media-Querys, bspw. beim `<picture>`-Element oder mehreren `<img srcset>`-Profilen. Dadurch wählt der Browser des jeweiligen Geräts die passende Auflösung und Bilddateien können bereits im Media Manager verkleinert werden. Statt Bilder mit hunderten an Kilobytes müssen in den jeweiligen Szenarien nur wenige Kilobyte pro Bild übertragen werden.
 2. Durch Zeitstempel an den jeweiligen Bild-URLs, z.B. `/mediaprofil/beispiel.jpg?timestamp=1234567890`. Richtig eingesetzt kann in der `.htaccess` oder an anderer Stelle des Servers das Bild ewig gecached werden - im REDAXO-Kontext auch als "Cache-Buster" bekannt. Nur wenn das Bild sich tatsächlich ändert, ändert sich die URL.
@@ -156,22 +170,22 @@ Media Manager Responsive kommt mit zahlreichen Erweiterungen, die es so in `medi
 
 ### Warum dauert der erste Seitenaufruf nach Verwendung sehr lange?
 
-Puh, statt dass jedes Bild nur ein Media-Manager-Profil durchläuft, sind es je nach gewählten Einstellungen beliebig viele Bilder. Beim Autor dieses Addons sind das schnell mal 18 Varianten pro Bild ((S, M, L) * (JPG, WEBP) * (1x, 2x, 3x) = 18 Kombinationen je Bild) Diese werden aus Optimierungsgründen auch alle in einem Rutsch erstellt.
+Puh, statt dass jedes Bild nur ein Media-Manager-Profil durchläuft, sind es je nach gewählten Einstellungen beliebig viele Bilder. Beim Autor dieses Addons sind das schnell mal 18 Varianten pro Bild ((S, M, L) *(JPG, WEBP)* (1x, 2x, 3x) = 18 Kombinationen je Bild) Diese werden aus Optimierungsgründen auch alle in einem Rutsch erstellt.
 
 Bei einer Galerie mit 12 Bildern bedeutet dies statt 12 generierter Bilder nun bspw. 216 Bilder, deren Cache-Versionen erstellt werden.
 
 Ein entsprechend performantes Webhosting-Paket und ausreichend Speicherplatz werden daher empfohlen.
 
-Abhilfe schafft das Addon https://github.com/FriendsOfREDAXO/cache_warmup - da die Bilder zur Laufzeit generiert werden, können bei umfangreichen Seiten alle benötigten Bildkombinationen in einem Rutsch generiert werden.
+Abhilfe schafft das Addon <https://github.com/FriendsOfREDAXO/cache_warmup> - da die Bilder zur Laufzeit generiert werden, können bei umfangreichen Seiten alle benötigten Bildkombinationen in einem Rutsch generiert werden.
 
 ## Lizenz
 
-[MIT Lizenz](https://github.com/alexplusde/media_manager_responsive/blob/master/LICENSE.md) 
+[MIT Lizenz](https://github.com/alexplusde/media_manager_responsive/blob/master/LICENSE.md)
 
 ## Autor
 
 **Alexander Walther**
-https://www.alexplus.de
+<https://www.alexplus.de>
 
-**Projekt-Lead** 
+**Projekt-Lead**
 [Alexander Walther](https://www.alexplus.de)
