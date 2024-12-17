@@ -3,6 +3,7 @@
 use Alexplusde\MediaManagerResponsive\Media;
 use Alexplusde\MediaManagerResponsive\Type;
 use Alexplusde\MediaManagerResponsive\TypeGroup;
+use Alexplusde\MediaManagerResponsive\TypeInjector;
 
 if (rex_addon::get('yform')->isAvailable()) {
     rex_yform_manager_dataset::setModelClass(
@@ -34,6 +35,6 @@ if (rex_addon::get('cache_warmup')->isAvailable()) {
 if (rex::isFrontend() && '' != rex_config::get('media_manager_responsive', 'auto_inject_type')) {
     rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) {
         $html = $ep->getSubject();
-        return MediaManagerTypeInjector::injectType($html, rex_config::get('media_manager_responsive', 'auto_inject_type'));
+        return TypeInjector::injectType($html, rex_config::get('media_manager_responsive', 'auto_inject_type'));
     });
 }

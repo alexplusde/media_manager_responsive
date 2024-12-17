@@ -1,6 +1,12 @@
 <?php
 
-class MediaManagerTypeInjector
+namespace Alexplusde\MediaManagerResponsive;
+
+use DOMDocument;
+use DOMXPath;
+use RuntimeException;
+
+class TypeInjector
 {
     private static function addTypeToPath(string $type, string $profilePath): string
     {
@@ -43,7 +49,7 @@ class MediaManagerTypeInjector
                     if ('src' == $attribute->name) {
                         // Dateiname ohne Pfad
                         $filename = basename($attribute->value);
-                        $media = rex_media_plus::get($filename);
+                        $media = Media::get($filename);
                     }
                 }
 
@@ -73,7 +79,7 @@ class MediaManagerTypeInjector
 
                 foreach ($imgAttributes as $name => $value) {
                     $attributes = $img->attributes;
-                    /** @var DOMNamedNodeMap $attributes */
+                    /** @var \DOMNamedNodeMap $attributes */
                     if (null === $attributes->getNamedItem($name)) {
                         $newAttribute = $dom->createAttribute($name);
                         $newAttribute->value = $value;
