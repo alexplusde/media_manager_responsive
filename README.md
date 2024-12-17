@@ -90,6 +90,8 @@ Anschließend wird zur Laufzeit der Media Manager Typ in den WYSIWYG-Editor inji
 
 ## Medien Manager Responsive verwenden
 
+> **Tipp**: Kombiniere dieses Addon mit [Media Negotiator von AndiLeni](https://github.com/AndiLeni/media_negotiator), dieser erlaubt es, die ausgespielten Dateiformate je nach Browser und Gerät zu optimieren. Dann müssen keine separaten WEBP-Profile oder AVIF-Profile angelegt werden.
+
 ### Beispiel-Medientypen-Liste
 
 ![image](https://user-images.githubusercontent.com/3855487/162642967-8dee2322-2702-4486-85fb-e988cbe8ef37.png)
