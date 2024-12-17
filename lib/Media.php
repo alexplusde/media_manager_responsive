@@ -122,20 +122,25 @@ class Media extends rex_media
         $attributes = rex_string::buildAttributes($img);
         return '<img ' . $attributes . ' />';
     }
+    
 
     /**
      * @api
      */
     public function getImgAsAttributesArray(string $type = ''): array
     {
+        
+        if($this->getType() === 'image/svg+xml') {
+            $type = '';
+        }
         $img = $this->getAttributes();
         $img['src'] = self::getFrontendUrl($this, $type);
         $managed_media = $this->getMediaCacheFile($type);
 
-        if ('' !== $type & $managed_media instanceof rex_managed_media) {
+        if ('' !== $type & $managed_media instanceof rex_managed_media && $managed_media->getWidth() > 0 && $managed_media->getHeight() > 0) {
             $img['width'] = $managed_media->getWidth();
             $img['height'] = $managed_media->getHeight();
-        } else {
+        } else if($this->getWidth() > 0 && $this->getHeight() > 0) {
             $img['width'] = $this->getWidth();
             $img['height'] = $this->getHeight();
         }
