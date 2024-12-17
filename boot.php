@@ -30,3 +30,10 @@ if (rex_addon::get('cache_warmup')->isAvailable()) {
         });
     }
 }
+
+if (rex::isFrontend() && '' != rex_config::get('media_manager_responsive', 'auto_inject_type')) {
+    rex_extension::register('OUTPUT_FILTER', static function (rex_extension_point $ep) {
+        $html = $ep->getSubject();
+        return MediaManagerTypeInjector::injectType($html, rex_config::get('media_manager_responsive', 'auto_inject_type'));
+    });
+}

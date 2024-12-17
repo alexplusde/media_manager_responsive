@@ -12,6 +12,23 @@ $select->setSize(1);
 $select->addOption($addon->i18n('media_manager_responsive_cache_warmup_original'), 'original');
 $select->addOption($addon->i18n('media_manager_responsive_cache_warmup_enhanced'), 'enhanced');
 
+$field = $form->addSelectField('auto_inject_type');
+$field->setLabel($addon->i18n('media_manager_responsive_auto_inject_type_label'));
+$field->setNotice($addon->i18n('media_manager_responsive_auto_inject_type_notice'));
+$select = $field->getSelect();
+$select->setSize(1);
+$select->addOption($addon->i18n('media_manager_responsive_auto_inject_type_no'), '');
+$rex_media_types = rex_sql::factory()->getArray('SELECT `name` FROM `' . rex::getTable('media_manager_type') . '` ORDER BY `status`, `name`');
+// Wen das Profil "default" nicht in $rex_media_types ist, dann dennoch zur Auswahl stellen - REDAXO behandelt das Profil besonders.
+
+if (!in_array('default', array_column($rex_media_types, 'name'))) {
+    $select->addOption('default', 'default');
+}
+
+foreach ($rex_media_types as $type) {
+    $select->addOption($type['name'], $type['name']);
+}
+
 $fragment = new rex_fragment();
 $fragment->setVar('class', 'edit', false);
 $fragment->setVar('title', $addon->i18n('media_manager_responsive_settings'), false);
@@ -31,7 +48,7 @@ $fragment = new rex_fragment();
 $fragment->setVar('class', 'info', false);
 $fragment->setVar('title', $addon->i18n('media_manager_responsive_donate'), false);
 $fragment->setVar('body', '<p>' . $addon->i18n('media_manager_responsive_info_donate') . '</p>' . $anchor, false);
-echo 1 === rex_config::get('alexplusde', 'donated') ? $fragment->parse('core/page/section.php') : '';
+echo !rex_config::get('alexplusde', 'donated') ? $fragment->parse('core/page/section.php') : '';
 
 if (rex_addon::get('speed_up')->isAvailable()) {
     $anchor = '<a target="_blank" href="https://github.com/alexplusde/speed_up/">' . $addon->i18n('media_manager_responsive_info_media_manager_responsive_install') . '</a>';
@@ -46,10 +63,9 @@ $package = rex_install_packages::getUpdatePackages();
 if (isset($packages['media_manager_responsive'])) {
     $current_version = rex_addon::get('media_manager_responsive')->getProperty('version');
     if (isset($package['files'])) {
-        /* FIXME: Das kann so gar nicht funktionieren */
         $latest_version = array_pop($updates)['version'];
     }
-    if (isset($latest_version) && rex_version::compare($latest_version, (string) $current_version, '>')) {
+    if (rex_version::compare($latest_version, $current_version, '>')) {
         echo rex_view::info($addon->i18n('media_manager_responsive_update_available') . ' ' . $latest_version);
     }
 }
