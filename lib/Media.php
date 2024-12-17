@@ -197,29 +197,28 @@ class Media extends rex_media
     /**
      * @api
      */
-    public static function getFrontendUrl(rex_media|self|rex_managed_media $media, ?string $profile = null, bool $show_timestamp = true): string
+    public static function getFrontendUrl(rex_media|self|rex_managed_media $media, ?string $type = null, bool $show_timestamp = true): string
     {
-        if ($media instanceof rex_media || $media instanceof self) {
-            $filename = $media->getFileName();
-        } else {
+        if($media instanceof rex_managed_media && $type !== '') {
             // $filename = $media->getMediaFilename();
             // Workaround wg. https://github.com/redaxo/redaxo/issues/4519#issuecomment-1183515367
             $path = explode(DIRECTORY_SEPARATOR, $media->getMediaPath() ?? '');
             $filename = array_pop($path);
+            return rex_media_manager::getUrl($type, $filename, $show_timestamp, false);
+        } 
+
+        if ($media instanceof rex_media || $media instanceof self) {
+            $filename = $media->getFileName();
         }
 
         $timestamp = '';
 
         if ($show_timestamp) {
-            if ($media instanceof rex_managed_media) {
-                $timestamp = '?timestamp=' . filectime($media->getSourcePath());
-            } else {
-                $timestamp = '?timestamp=' . filectime(rex_path::media($filename));
-            }
+            $timestamp = '?timestamp=' . filemtime(rex_path::media($filename));
         }
 
-        if (null !== $profile) {
-            return rex_url::media($profile . '/' . $filename) . $timestamp;
+        if (null !== $type) {
+            return rex_url::media($type . '/' . $filename) . $timestamp;
         }
 
         return rex_url::media($filename) . $timestamp;
