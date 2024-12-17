@@ -197,15 +197,15 @@ class Media extends rex_media
     /**
      * @api
      */
-    public static function getFrontendUrl(rex_media|self|rex_managed_media $media, ?string $type = null, bool $show_timestamp = true): string
+    public static function getFrontendUrl(rex_media|self|rex_managed_media $media, string $type = '', bool $show_timestamp = true): string
     {
-        if($media instanceof rex_managed_media && $type !== '') {
+        if ($media instanceof rex_managed_media && $type !== '') {
             // $filename = $media->getMediaFilename();
             // Workaround wg. https://github.com/redaxo/redaxo/issues/4519#issuecomment-1183515367
             $path = explode(DIRECTORY_SEPARATOR, $media->getMediaPath() ?? '');
             $filename = array_pop($path);
             return rex_media_manager::getUrl($type, $filename, $show_timestamp, false);
-        } 
+        }
 
         if ($media instanceof rex_media || $media instanceof self) {
             $filename = $media->getFileName();
@@ -217,7 +217,7 @@ class Media extends rex_media
             $timestamp = '?timestamp=' . filemtime(rex_path::media($filename));
         }
 
-        if (null !== $type) {
+        if ('' !== $type) {
             return rex_url::media($type . '/' . $filename) . $timestamp;
         }
 
