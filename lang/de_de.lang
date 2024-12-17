@@ -31,6 +31,9 @@ media_manager_responsive_cache_warmup_original = Keine Änderung
 media_manager_responsive_cache_warmup_enhanced = Optimiert (empfohlen)
 media_manager_responsive_cache_warmup_notice = Empfohlen: Erzwingt, dass Cache-Warmup den Cache "langsam" aufwärmt, um genügend Zeit zur Bildgenerierung zu lassen. Deaktiviert den Bildcache von Cache-Warmup, weil bereits durch Media Manager Responsive indirekt alle Bilder beim Aufurf eines Artikels generiert werden.
 
+media_manager_responsive_auto_inject_profile_label = Automatische Profileinbindung
+media_manager_responsive_auto_inject_profile_notice = Injiziert automatisch das passende Bildprofil in die Ausgabe (XOutputFilter), wenn ein Bild bspw in einem WYSIWYG-Editor eingefügt wird, ohne dort ein Profil auswählen zu können.
+
 media_manager_responsive_donate = Weiterentwicklung fördern
 media_manager_responsive_info_donate = Mit einer Beauftragung des Addon-Entwicklers (Alexander Walther) unterstützt du die Weiterentwicklung und Verbesserung dieses Addons.
 
