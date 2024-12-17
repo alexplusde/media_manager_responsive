@@ -80,11 +80,11 @@ class TypeInjector
                 foreach ($imgAttributes as $name => $value) {
                     $attributes = $img->attributes;
                     /** @var \DOMNamedNodeMap $attributes */
-                    if (null === $attributes->getNamedItem($name)) {
+                    if (null === $attributes->getNamedItem($name) && $value !== null) {
                         $newAttribute = $dom->createAttribute($name);
                         $newAttribute->value = $value;
                         $img->appendChild($newAttribute);
-                    } else {
+                    } else if($value !== null) {
                         $img->attributes->getNamedItem($name)->nodeValue = $value;
                     }
                 }
