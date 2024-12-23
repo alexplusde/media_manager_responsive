@@ -29,6 +29,25 @@ foreach ($rex_media_types as $type) {
     $select->addOption($type['name'], $type['name']);
 }
 
+
+$field = $form->addSelectField('auto_inject_group');
+$field->setLabel($addon->i18n('media_manager_responsive_auto_inject_group_label'));
+$field->setNotice($addon->i18n('media_manager_responsive_auto_inject_group_notice'));
+$select = $field->getSelect();
+$select->setSize(1);
+$select->addOption($addon->i18n('media_manager_responsive_auto_inject_group_no'), '');
+$rex_media_groupes  = rex_sql::factory()->getArray('SELECT `name` FROM `' . rex::getTable('media_manager_type_group') . '` ORDER BY `status`, `name`');
+// Wen das Profil "default" nicht in $rex_media_types ist, dann dennoch zur Auswahl stellen - REDAXO behandelt das Profil besonders.
+
+if (!in_array('default', array_column($rex_media_groupes, 'name'))) {
+    $select->addOption('default', 'default');
+}
+
+foreach ($rex_media_groupes as $type) {
+    $select->addOption($type['name'], $type['name']);
+}
+
+
 $fragment = new rex_fragment();
 $fragment->setVar('class', 'edit', false);
 $fragment->setVar('title', $addon->i18n('media_manager_responsive_settings'), false);
