@@ -59,6 +59,7 @@ class TypeInjector
 
                 $newImageString = $media->getImgAsAttributesArray($type);
                 $imgAttributes = array_merge($imgAttributes, $newImageString);
+                $imgAttributes['data-media-manager-responsive'] = 'injected';
 
                 if (isset($urlParts['scheme'], $urlParts['host'])) {
                     // Absolute URL
@@ -84,7 +85,7 @@ class TypeInjector
                         $newAttribute = $dom->createAttribute($name);
                         $newAttribute->value = $value;
                         $img->appendChild($newAttribute);
-                    } else if($value !== null) {
+                    } elseif ($value !== null) {
                         $img->attributes->getNamedItem($name)->nodeValue = $value;
                     }
                 }
