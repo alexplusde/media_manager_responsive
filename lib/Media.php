@@ -219,7 +219,7 @@ class Media extends rex_media
         $timestamp = '';
 
         if ($show_timestamp) {
-            $timestamp = '?timestamp=' . filemtime(rex_path::media($filename));
+            $timestamp = '?timestamp=' . @filemtime(rex_path::media($filename));
         }
 
         if ('' !== $type) {
