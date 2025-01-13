@@ -51,7 +51,7 @@ Liefert ein vollständiges Image-Element anhand eines Präfix inkl. `srcset=""`-
 
 ### `setTitle()` 
 
-Überschreibe den alt-Tag des Bildes auf Wunsch mit einem eigenen Text.
+Standardmäßig nutzt die Klasse das Titel-Feld des Medienpools für das Alt-Attribut des Bildes. Überschreibe das alt-Attribut auf Wunsch mit einem eigenen Text.
 
 ### Beispiele mit REX_VARS
 
