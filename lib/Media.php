@@ -194,9 +194,10 @@ class Media extends rex_media
     /**
      * @api
      */
-    public function setTitle(string $value = ''): void
+    public function setTitle(string $value = ''): self
     {
         $this->title = $value;
+        return $this;
     }
 
     /**
