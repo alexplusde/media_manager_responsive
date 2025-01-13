@@ -49,6 +49,10 @@ Liefert ein vollständiges Image-Element anhand eines Präfix inkl. `srcset=""`-
 
 Liefert ein vollständiges Image-Element anhand eines Präfix inkl. `srcset=""`-Attribut. Dazu muss es passende Media Manager Profile mit einer bestimmten Syntax geben, die unter "Media Manager Profile" in dieser Hilfe-Datei erklärt wird.
 
+### `setTitle()` 
+
+Überschreibe den alt-Tag des Bildes auf Wunsch mit einem eigenen Text.
+
 ### Beispiele mit REX_VARS
 
 ```php
