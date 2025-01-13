@@ -73,7 +73,7 @@ REX_MEDIA_PLUS[file="file.jpg" output="background" group="header"]
 use Alexplusde\MediaManagerResponsive\Media;
 
 echo Media::get("beispielbild.jpg")->getImg($type);
-echo Media::get("beispielbild.jpg")->setClass("img-fluid")->getImg($type);
+echo Media::get("beispielbild.jpg")->setClass("img-fluid")->setTitle('Das ist mein Alt-Attribut')->getImg($type);
 echo Media::get("beispielbild.jpg")->getBase64();
 echo Media::get("beispielbild.jpg")->getPicture($group);
 echo Media::get("beispielbild.jpg")->getBackgroundStyles($group);
